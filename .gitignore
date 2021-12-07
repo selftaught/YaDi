@@ -1,0 +1,11 @@
+*.gitignore.*
+.gitignore~
+*.swp
+*.swo
+.vs
+bin
+HACKME
+obj
+TestDLL
+x64
+x32
