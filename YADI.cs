@@ -32,8 +32,8 @@ namespace YADI
 
             InitializeComponent();
             InitializeDllPathInput();
-            InitializeInjectionMethod();
             InitializeProcessList();
+            InitializeMethodComboBox();
         }
 
         private void InitializeDllPathInput()
@@ -41,31 +41,6 @@ namespace YADI
             if (DllPathText != null && config != null && config.RememberLastDllPath())
             {
                 DllPathText.Text = (String)config.LastDllPath();
-            }
-        }
-
-        private void InitializeInjectionMethod()
-        {
-            if (config.RememberLastMethod())
-            {
-                switch (config.LastInjectionMethod())
-                {
-                    case (ushort)InjectionMethod.LoadLibrary:
-                        {
-                            loadLibraryRadioButton.Checked = true;
-                            break;
-                        }
-                    case (ushort)InjectionMethod.SetWindowsHook:
-                        {
-                            setWindowsHookExMethButton.Checked = true;
-                            break;
-                        }
-                    case (ushort)InjectionMethod.ThreadHijack:
-                        {
-                            threadHijackMethButton.Checked = true;
-                            break;
-                        }
-                }
             }
         }
 
@@ -78,13 +53,60 @@ namespace YADI
             {
                 if (process.Id == 0)
                 {
-                    continue;   
+                    continue;
                 }
 
                 processListBox.Items.Add(process.Id.ToString() + " - " + process.ProcessName);
             }
 
             processListBox.EndUpdate();
+        }
+
+        private void InitializeMethodComboBox()
+        {
+            string methodStr = "LoadLibrary";
+
+            if (config.RememberLastMethod())
+            {
+                switch(config.LastInjectionMethod())
+                {
+                    case (ushort)InjectionMethod.SetWindowsHook:
+                        {
+                            methodStr = "SetWindowsHook";
+                            break;
+                        }
+                    case (ushort)InjectionMethod.ThreadHijack:
+                        {
+                            methodStr = "Thread Hijack";
+                            break;
+                        }
+                }
+            }
+
+            for (int i = 0; i < injectionMethComboBox.Items.Count; i++)
+            {
+                String itemStr = injectionMethComboBox.Items[i].ToString();
+
+                if (itemStr.Contains(methodStr))
+                {
+                    injectionMethComboBox.SelectedIndex = i;
+                    break;
+                }
+            }
+        }
+
+        InjectionMethod injectMethodStrToEnum(String methodStr)
+        {
+            if (methodStr.Contains("SetWindowsHook"))
+            {
+                return InjectionMethod.SetWindowsHook;
+            }
+            else if (methodStr.Contains("Thread Hijack"))
+            {
+                return InjectionMethod.ThreadHijack;
+            }
+
+            return InjectionMethod.LoadLibrary;
         }
 
         private void Browse_Click(object sender, EventArgs e)
@@ -165,35 +187,6 @@ namespace YADI
             }
         }
 
-        private void loadLibraryRadioButton_CheckedChanged(object sender, EventArgs e)
-        {
-            this.selectedInjectMeth = InjectionMethod.LoadLibrary;
-
-            if (config != null && config.RememberLastMethod())
-            {
-                config.SetLastMethod((ushort)InjectionMethod.LoadLibrary);
-            }
-        }
-
-        private void threadBypassRadioBtn_CheckedChanged(object sender, EventArgs e)
-        {
-            this.selectedInjectMeth = InjectionMethod.ThreadHijack;
-
-            if (config != null && config.RememberLastMethod())
-            {
-                config.SetLastMethod((ushort)InjectionMethod.ThreadHijack);
-            }
-        }
-        private void setWindowsHookExMethButton_CheckedChanged(object sender, EventArgs e)
-        {
-            this.selectedInjectMeth = InjectionMethod.SetWindowsHook;
-
-            if (config != null && config.RememberLastMethod())
-            {
-                config.SetLastMethod((ushort)InjectionMethod.SetWindowsHook);
-            }
-        }
-
         private void processListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             String selected = (String)processListBox.SelectedItem;
@@ -217,6 +210,45 @@ namespace YADI
                 {
                     this.selectedProcess = null;
                 }
+            }
+        }
+
+        private void injectionMethComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            String selectMethodStr = injectionMethComboBox.SelectedItem.ToString();
+
+            switch(injectMethodStrToEnum(selectMethodStr))
+            {
+                case InjectionMethod.LoadLibrary:
+                    {
+                        this.selectedInjectMeth = InjectionMethod.LoadLibrary;
+
+                        if (config != null && config.RememberLastMethod())
+                        {
+                            config.SetLastMethod((ushort)InjectionMethod.LoadLibrary);
+                        }
+                        break;
+                    }
+                case InjectionMethod.SetWindowsHook:
+                    {
+                        this.selectedInjectMeth = InjectionMethod.SetWindowsHook;
+
+                        if (config != null && config.RememberLastMethod())
+                        {
+                            config.SetLastMethod((ushort)InjectionMethod.SetWindowsHook);
+                        }
+                        break;
+                    }
+                case InjectionMethod.ThreadHijack:
+                    {
+                        this.selectedInjectMeth = InjectionMethod.ThreadHijack;
+
+                        if (config != null && config.RememberLastMethod())
+                        {
+                            config.SetLastMethod((ushort)InjectionMethod.ThreadHijack);
+                        }
+                        break;
+                    }
             }
         }
     }

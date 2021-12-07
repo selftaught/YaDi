@@ -84,6 +84,8 @@
     <Compile Include="Externals\Kernel32.cs" />
     <Compile Include="Externals\PSAPI.cs" />
     <Compile Include="Externals\User32.cs" />
+    <Compile Include="Injection\APC.cs" />
+    <Compile Include="Injection\IATHook.cs" />
     <Compile Include="Injection\ThreadHijack.cs" />
     <Compile Include="Injection\LoadLibrary.cs" />
     <Compile Include="Injection\SetWindowsHookEx.cs" />

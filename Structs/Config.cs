@@ -97,6 +97,11 @@ namespace YADI.Structs
             Console.WriteLine(sb.ToString());
 #endif
 
+            using (StreamWriter file =  new StreamWriter(configPath))
+            {
+                file.Write(sb.ToString());
+            }
+
             File.WriteAllText(configPath, sb.ToString());
 
             return true;
