@@ -53,31 +53,57 @@ namespace YADI.Injection
                 return false;
             }
 
-            // Iterate through process' threads and attempt to queueuserapc on it each
             Process process = Process.GetProcessById(this.pid);
 
+            // Iterate through process' threads and attempt to queueuserapc on each
+            // until we find one.
             for (int i = 0; i < process.Threads.Count; i++)
             {
-                ProcessThread pt = process.Threads[i];
+                int threadId = process.Threads[i].Id;
 #if DEBUG
                 Console.WriteLine("Checking thread " + i + " of " + process.Threads.Count);
-                Console.WriteLine("\tThread ID: " + pt.Id);
+                Console.WriteLine("\tThread ID: " + threadId);
 #endif
                 // Get a thread handle that we can pass in the following Kernel32 calls
-                IntPtr threadHandle = Kernel32.OpenThread(Kernel32.ThreadAccess.THREAD_HIJACK, false, (uint)pt.Id);
+                IntPtr threadHandle = Kernel32.OpenThread(Kernel32.ThreadAccess.THREAD_HIJACK, false, (uint)threadId);
 
-                // Handle the case where we don't get a handle back
+                // If we don't get a handle back on the thread
                 if (threadHandle == null || threadHandle == IntPtr.Zero)
                 {
 #if DEBUG
-                    Console.WriteLine("Couldn't open handle to thread (ID: " + pt.Id + ")");
+                    Console.WriteLine("Couldn't open handle to thread (ID: " + threadId + ")");
 #endif
                     // Try the next thread
                     continue;
                 }
-            }
 
-            process.Close();
+#if DEBUG
+                Console.WriteLine("Got thread handle: " + threadHandle + "\nAttempting to suspend thread");
+#endif
+
+                // Suspend the thread so we can QueueUserAPC
+                int pSuspendedThreadStatus = Kernel32.SuspendThread(threadHandle);
+
+                if (pSuspendedThreadStatus == -1)
+                {
+#if DEBUG
+                    Console.Write("SuspendThread failed (thread id: " + threadId + ")...");
+#endif
+                    // Close the handle on the current thread
+                    Kernel32.CloseHandle(threadHandle);
+
+                    // Try the next thread
+                    continue;
+                }
+
+                // QueueUserAPC
+
+                // ResumeThread
+                Kernel32.ResumeThread(threadHandle);
+
+                // Close thread handle
+                Kernel32.CloseHandle(threadHandle);
+            }
 
             // Free our VA'd memory
             if (!Kernel32.VirtualFreeEx(procHandle, writeAddr, 0, Kernel32.MEM_RELEASE))
@@ -85,12 +111,19 @@ namespace YADI.Injection
 #if DEBUG
                 Console.WriteLine("VirtualFreeEx() failed!");
 #endif
+                // Close process handle before returning
                 Kernel32.CloseHandle(procHandle);
+
                 return false;
             }
 
-            // Close our handle to the process
+#if DEBUG
+            Console.WriteLine("Successfully free'd VA memory");
+#endif
+
+            // Close process handle before returning
             Kernel32.CloseHandle(procHandle);
+            process.Close();
 
             return true;
         }

@@ -244,7 +244,7 @@ namespace YADI.Externals
          * QueueUserAPC
          * https://docs.microsoft.com/en-us/windows/win32/api/processthreadsapi/nf-processthreadsapi-queueuserapc
          */
-        //[DllImport("kernel32.dll")]
-        //public static extern UInt32 QueueUserAPC(IntPtr pfnAPC, IntPtr hThread, ref UInt64 dwData);
+        [DllImport("kernel32.dll")]
+        public static extern UInt32 QueueUserAPC(IntPtr pfnAPC, IntPtr hThread, ref UInt64 dwData);
     }
 }
