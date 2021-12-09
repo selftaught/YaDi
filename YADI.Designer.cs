@@ -175,7 +175,7 @@ namespace YADI
             // 
             this.injectionMethComboBox.FormattingEnabled = true;
             this.injectionMethComboBox.Items.AddRange(new object[] {
-            "APC",
+            "QueueUserAPC",
             "IAT Hook",
             "LoadLibrary",
             "Reflective",

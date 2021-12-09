@@ -105,7 +105,13 @@ namespace YADI
             {
                 return InjectionMethod.ThreadHijack;
             }
+            else if (methodStr.Contains("QueueUserAPC"))
+            {
+                Console.WriteLine("QueueUserAPC");
+                return InjectionMethod.QueueUserAPC;
+            }
 
+            Console.WriteLine("LoadLibrary");
             return InjectionMethod.LoadLibrary;
         }
 
@@ -256,6 +262,16 @@ namespace YADI
                         if (config != null && config.RememberLastMethod())
                         {
                             config.SetLastMethod((ushort)InjectionMethod.ThreadHijack);
+                        }
+                        break;
+                    }
+                case InjectionMethod.QueueUserAPC:
+                    {
+                        this.selectedInjectMeth = InjectionMethod.QueueUserAPC;
+
+                        if (config != null && config.RememberLastMethod())
+                        {
+                            config.SetLastMethod((ushort)InjectionMethod.QueueUserAPC);
                         }
                         break;
                     }
