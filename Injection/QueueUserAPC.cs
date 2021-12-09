@@ -43,10 +43,16 @@ namespace YADI.Injection
             // Allocate memory for DLL bytes
             IntPtr writeAddr = Kernel32.VirtualAllocEx(procHandle, IntPtr.Zero, (uint)dllBytes.Length, Kernel32.MEM_RESERVE | Kernel32.MEM_COMMIT, Kernel32.PAGE_READWRITE);
 
+            if (writeAddr == IntPtr.Zero ||  writeAddr == null)
+            {
+                MessageBox.Show("VirtualAllocEx() was unsuccessful");
+                return false;
+            }
+
             // Write DLL to memory
             UIntPtr bytesWritten = UIntPtr.Zero;
 
-            if (!Kernel32.WriteProcessMemory(procHandle, writeAddr, Encoding.ASCII.GetBytes(dllPath), (uint)dllBytes.Length, out bytesWritten))
+            if (!Kernel32.WriteProcessMemory(procHandle, writeAddr, dllBytes, (uint)dllBytes.Length, out bytesWritten))
             {
                 MessageBox.Show("Failed to write DLL path to process memory...");
                 Kernel32.CloseHandle(procHandle);
@@ -54,6 +60,7 @@ namespace YADI.Injection
             }
 
             Process process = Process.GetProcessById(this.pid);
+            bool queued = false;
 
             // Iterate through process' threads and attempt to queueuserapc on each
             // until we find one.
@@ -61,7 +68,7 @@ namespace YADI.Injection
             {
                 int threadId = process.Threads[i].Id;
 #if DEBUG
-                Console.WriteLine("Checking thread " + i + " of " + process.Threads.Count);
+                Console.WriteLine("Checking thread " + i + " of " + (process.Threads.Count - 1));
                 Console.WriteLine("\tThread ID: " + threadId);
 #endif
                 // Get a thread handle that we can pass in the following Kernel32 calls
@@ -97,12 +104,32 @@ namespace YADI.Injection
                 }
 
                 // QueueUserAPC
+                if (Kernel32.QueueUserAPC(writeAddr, threadHandle, UIntPtr.Zero) != 0)
+                {
+#if DEBUG
+                    Console.WriteLine("QueueUserAPC was unsuccessful");
+#endif
+                    // ResumeThread
+                    Kernel32.ResumeThread(threadHandle);
+
+                    // Close thread handle
+                    Kernel32.CloseHandle(threadHandle);
+
+                    continue;
+                }
+
+                queued = true;
 
                 // ResumeThread
                 Kernel32.ResumeThread(threadHandle);
 
                 // Close thread handle
                 Kernel32.CloseHandle(threadHandle);
+            }
+
+            if (!queued)
+            {
+                MessageBox.Show("QueueUserAPC injection failed");
             }
 
             // Free our VA'd memory
