@@ -68,11 +68,11 @@ Thread Hijack DLL injection works by writing code into the target process' memor
 
 **CONS**
 
-### APC
+### QueueUserAPC
 
 ---
 
-APC (Asynchronous Procedure Call)
+QueueUserAPC (Queue User Asynchronous Procedure Call)
 
 `@TODO`
 

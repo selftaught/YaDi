@@ -56,9 +56,10 @@ namespace YADI
             // InjectButton
             // 
             this.InjectButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.InjectButton.Location = new System.Drawing.Point(27, 329);
+            this.InjectButton.Location = new System.Drawing.Point(36, 405);
+            this.InjectButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.InjectButton.Name = "InjectButton";
-            this.InjectButton.Size = new System.Drawing.Size(278, 42);
+            this.InjectButton.Size = new System.Drawing.Size(371, 47);
             this.InjectButton.TabIndex = 0;
             this.InjectButton.Text = "Inject";
             this.InjectButton.UseVisualStyleBackColor = true;
@@ -67,19 +68,21 @@ namespace YADI
             // Browse
             // 
             this.Browse.Image = ((System.Drawing.Image)(resources.GetObject("Browse.Image")));
-            this.Browse.Location = new System.Drawing.Point(237, 50);
+            this.Browse.Location = new System.Drawing.Point(316, 62);
+            this.Browse.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Browse.Name = "Browse";
-            this.Browse.Size = new System.Drawing.Size(68, 23);
+            this.Browse.Size = new System.Drawing.Size(91, 28);
             this.Browse.TabIndex = 2;
             this.Browse.UseVisualStyleBackColor = true;
             this.Browse.Click += new System.EventHandler(this.Browse_Click);
             // 
             // DllPathText
             // 
-            this.DllPathText.Location = new System.Drawing.Point(27, 50);
+            this.DllPathText.Location = new System.Drawing.Point(36, 62);
+            this.DllPathText.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.DllPathText.Multiline = true;
             this.DllPathText.Name = "DllPathText";
-            this.DllPathText.Size = new System.Drawing.Size(204, 21);
+            this.DllPathText.Size = new System.Drawing.Size(271, 25);
             this.DllPathText.TabIndex = 3;
             this.DllPathText.TabStop = false;
             this.DllPathText.WordWrap = false;
@@ -88,19 +91,19 @@ namespace YADI
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(24, 34);
+            this.label1.Location = new System.Drawing.Point(32, 42);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(27, 13);
+            this.label1.Size = new System.Drawing.Size(34, 17);
             this.label1.TabIndex = 4;
             this.label1.Text = "DLL";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(24, 71);
-            this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.label2.Location = new System.Drawing.Point(32, 87);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(0, 13);
+            this.label2.Size = new System.Drawing.Size(0, 17);
             this.label2.TabIndex = 9;
             // 
             // menuStrip1
@@ -112,55 +115,55 @@ namespace YADI
             this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Padding = new System.Windows.Forms.Padding(4, 2, 0, 2);
-            this.menuStrip1.Size = new System.Drawing.Size(338, 24);
+            this.menuStrip1.Padding = new System.Windows.Forms.Padding(5, 2, 0, 2);
+            this.menuStrip1.Size = new System.Drawing.Size(451, 28);
             this.menuStrip1.TabIndex = 11;
             this.menuStrip1.Text = "menuStrip1";
             // 
             // fileToolStripMenuItem
             // 
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(46, 24);
             this.fileToolStripMenuItem.Text = "File";
             // 
             // editToolStripMenuItem
             // 
             this.editToolStripMenuItem.Name = "editToolStripMenuItem";
-            this.editToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
+            this.editToolStripMenuItem.Size = new System.Drawing.Size(49, 24);
             this.editToolStripMenuItem.Text = "Edit";
             // 
             // helpToolStripMenuItem
             // 
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
-            this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(55, 24);
             this.helpToolStripMenuItem.Text = "Help";
             // 
             // processListBox
             // 
             this.processListBox.FormattingEnabled = true;
-            this.processListBox.Location = new System.Drawing.Point(27, 165);
-            this.processListBox.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.processListBox.ItemHeight = 16;
+            this.processListBox.Location = new System.Drawing.Point(36, 203);
+            this.processListBox.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.processListBox.Name = "processListBox";
-            this.processListBox.Size = new System.Drawing.Size(278, 147);
+            this.processListBox.Size = new System.Drawing.Size(369, 180);
             this.processListBox.TabIndex = 16;
             this.processListBox.SelectedIndexChanged += new System.EventHandler(this.processListBox_SelectedIndexChanged);
             // 
             // searchTextBox
             // 
-            this.searchTextBox.Location = new System.Drawing.Point(27, 129);
-            this.searchTextBox.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
+            this.searchTextBox.Location = new System.Drawing.Point(36, 159);
+            this.searchTextBox.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.searchTextBox.Name = "searchTextBox";
-            this.searchTextBox.Size = new System.Drawing.Size(278, 20);
+            this.searchTextBox.Size = new System.Drawing.Size(369, 22);
             this.searchTextBox.TabIndex = 17;
             this.searchTextBox.TextChanged += new System.EventHandler(this.searchTextBox_TextChanged);
             // 
             // processSearchrLabel
             // 
             this.processSearchrLabel.AutoSize = true;
-            this.processSearchrLabel.Location = new System.Drawing.Point(24, 113);
-            this.processSearchrLabel.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.processSearchrLabel.Location = new System.Drawing.Point(32, 139);
             this.processSearchrLabel.Name = "processSearchrLabel";
-            this.processSearchrLabel.Size = new System.Drawing.Size(41, 13);
+            this.processSearchrLabel.Size = new System.Drawing.Size(53, 17);
             this.processSearchrLabel.TabIndex = 18;
             this.processSearchrLabel.Text = "Search";
             // 
@@ -178,17 +181,18 @@ namespace YADI
             "Reflective",
             "SetWindowsHookEx",
             "Thread Hijack / SIR (Suspend, Inject, Resume)"});
-            this.injectionMethComboBox.Location = new System.Drawing.Point(27, 87);
+            this.injectionMethComboBox.Location = new System.Drawing.Point(36, 107);
+            this.injectionMethComboBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.injectionMethComboBox.Name = "injectionMethComboBox";
-            this.injectionMethComboBox.Size = new System.Drawing.Size(278, 21);
+            this.injectionMethComboBox.Size = new System.Drawing.Size(369, 24);
             this.injectionMethComboBox.TabIndex = 19;
             this.injectionMethComboBox.SelectedIndexChanged += new System.EventHandler(this.injectionMethComboBox_SelectedIndexChanged);
             // 
             // YADI
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(338, 396);
+            this.ClientSize = new System.Drawing.Size(451, 477);
             this.Controls.Add(this.injectionMethComboBox);
             this.Controls.Add(this.processSearchrLabel);
             this.Controls.Add(this.searchTextBox);
@@ -202,7 +206,7 @@ namespace YADI
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.MaximizeBox = false;
             this.Name = "YADI";
             this.Text = " ";

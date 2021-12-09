@@ -17,12 +17,12 @@ namespace YADI.Injection
 {
     public class LoadLibrary
     {
-        private uint pid;
+        private int pid;
         public LoadLibrary(int pid)
         {
-            this.pid = (uint)pid;
+            this.pid = pid;
         }
-        public bool inject(String dllPath)
+        public bool Inject(String dllPath)
         {
             if (this.pid < 0)
             {
@@ -30,9 +30,7 @@ namespace YADI.Injection
                 return false;
             }
 
-            Process proc = Process.GetProcessById((int)this.pid);
-
-            List<Structs.Module> procModules = PSAPI.GetProcessModules(proc);
+            Process proc = Process.GetProcessById(this.pid);
 
 #if DEBUG
             Console.WriteLine("Process base address: " + proc.MainModule.BaseAddress.ToString("x8"));
@@ -44,8 +42,7 @@ namespace YADI.Injection
                 Kernel32.PROCESS_VM_OPERATION |
                 Kernel32.PROCESS_VM_WRITE |
                 Kernel32.PROCESS_VM_READ,
-                false, this.pid);
-
+                false, (uint)this.pid);
 
             if (procHandle == null)
             {
@@ -56,6 +53,7 @@ namespace YADI.Injection
 #if DEBUG
             Console.WriteLine("Acquired process handle: " + procHandle.ToString("x8"));
 #endif
+
             uint dllPathLen = (uint)dllPath.Length;
 
             IntPtr dllPathBaseAddr = Kernel32.VirtualAllocEx(procHandle, IntPtr.Zero, dllPathLen, Kernel32.MEM_RESERVE | Kernel32.MEM_COMMIT, Kernel32.PAGE_READWRITE);

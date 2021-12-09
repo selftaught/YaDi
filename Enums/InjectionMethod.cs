@@ -11,5 +11,7 @@ namespace YADI.Enums
         LoadLibrary = 0,
         SetWindowsHook = 1,
         ThreadHijack = 2,
+        QueueUserAPC = 3,
+        IATHook = 4,
     }
 }

@@ -128,23 +128,33 @@ namespace YADI
         {
             if (selectedProcess != null && DllPathText.Text.Length > 0)
             {
+                int pid = selectedProcess.Id;
+
                 switch(this.selectedInjectMeth)
                 {
                     case InjectionMethod.LoadLibrary:
                     {
-                        (new LoadLibrary(this.selectedProcess.Id))
-                            .inject(DllPathText.Text);
+                        (new LoadLibrary(pid)).Inject(DllPathText.Text);
                         break;
                     }
                     case InjectionMethod.SetWindowsHook:
                     {
-                        // @TODO
+                        (new SetWindowsHookEx(pid)).Inject(DllPathText.Text);
                         break;
                     }
                     case InjectionMethod.ThreadHijack:
                     {
-                        (new ThreadHijack(this.selectedProcess.Id))
-                            .inject(DllPathText.Text);
+                        (new ThreadHijack(pid)).Inject(DllPathText.Text);
+                        break;
+                    }
+                    case InjectionMethod.IATHook:
+                    {
+                        (new IATHook(pid)).Inject(DllPathText.Text);
+                        break;
+                    }
+                    case InjectionMethod.QueueUserAPC:
+                    {
+                        (new QueueUserAPC(pid)).Inject(DllPathText.Text);
                         break;
                     }
                 }

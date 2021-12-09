@@ -21,9 +21,9 @@ namespace YADI.Injection
             this.pid = pid;
         }
 
-        public bool inject(String dllPath)
+        public bool Inject(String dllPath)
         {
-            Process process = Process.GetProcessById(this.pid);
+            Process process = Process.GetProcessById((int)this.pid);
 
             if (process == null)
             {
