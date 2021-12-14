@@ -2,6 +2,7 @@
 .gitignore~
 *.swp
 *.swo
+*.sln
 .vs
 bin
 HACKME
