@@ -46,10 +46,10 @@ namespace YADI
 
         private void InitializeProcessListView()
         {
-            processListView.Columns.Add("PID", 50);
-            processListView.Columns.Add("Name", 150);
-            processListView.Columns.Add("Title", 80);
-            processListView.Columns.Add("Path", 150);
+            ProcessListView.Columns.Add("PID", 50);
+            ProcessListView.Columns.Add("Name", 150);
+            ProcessListView.Columns.Add("Title", 80);
+            ProcessListView.Columns.Add("Path", 150);
 
             PopulateProcessListView(String.Empty);
         }
@@ -57,7 +57,7 @@ namespace YADI
         private void PopulateProcessListView(String filter)
         {
             // Clear the list of any items
-            processListView.Items.Clear();
+            ProcessListView.Items.Clear();
 
             List<String> processStrings = new List<String>();
 
@@ -76,7 +76,7 @@ namespace YADI
                 lvi.SubItems.Add(process.MainWindowTitle);
                 lvi.SubItems.Add(sProcFilename);
 
-                processListView.Items.Add(lvi);
+                ProcessListView.Items.Add(lvi);
             }
         }
 
@@ -183,9 +183,9 @@ namespace YADI
             }
         }
 
-        private void searchTextBox_TextChanged(object sender, EventArgs e)
+        private void SearchTextBox_TextChanged(object sender, EventArgs e)
         {
-            PopulateProcessListView(searchTextBox.Text);
+            PopulateProcessListView(SearchTextBox.Text);
             InjectButton_TryEnable();
         }
 
@@ -262,9 +262,9 @@ namespace YADI
             }
         }
 
-        private void processListView_SelectedIndexChanged(object sender, EventArgs e)
+        private void ProcessListView_SelectedIndexChanged(object sender, EventArgs e)
         {
-            foreach (ListViewItem item in processListView.SelectedItems) {
+            foreach (ListViewItem item in ProcessListView.SelectedItems) {
                 if (Int32.TryParse(item.Text, out int pid))
                 {
                     selectedProcessID = pid;
