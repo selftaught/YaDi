@@ -23,6 +23,8 @@ namespace YADI
     {
         private String  selectedDllPath = null;
         private Process selectedProcess = null;
+        private double processListViewLastUpdatedAt = 0;
+        private double processListViewUpdateDelay = 0.500; // 500ms
         private InjectionMethod selectedInjectMeth = InjectionMethod.LoadLibrary;
         private Structs.Config config;
 
@@ -32,7 +34,7 @@ namespace YADI
 
             InitializeComponent();
             InitializeDllPathInput();
-            InitializeProcessList();
+            InitializeProcessListView();
             InitializeMethodComboBox();
         }
 
@@ -44,22 +46,47 @@ namespace YADI
             }
         }
 
-        private void InitializeProcessList()
+        private void InitializeProcessListView()
         {
-            Process[] processCollection = Process.GetProcesses();
+            processListView.Columns.Add("PID", 50);
+            processListView.Columns.Add("Name", 100);
+            processListView.Columns.Add("Title", 75);
+            processListView.Columns.Add("Path", 100);
+
+            PopulateProcessListView("");
+        }
+
+        private void PopulateProcessListView(String filter)
+        {
+            double now = Helpers.Misc.Epoch();
+
+            if ((now - processListViewLastUpdatedAt) < processListViewUpdateDelay)
+            {
+                return;
+            }
+
+            // Clear the list of any items
+            processListView.Items.Clear();
+
             List<String> processStrings = new List<String>();
 
-            foreach (Process process in processCollection)
+            foreach (Process process in Process.GetProcesses())
             {
-                if (process.Id == 0)
+                if (filter.Length > 0 && !process.ProcessName.Contains(filter))
                 {
                     continue;
                 }
 
-                processListBox.Items.Add(process.Id.ToString() + " - " + process.ProcessName);
-            }
+                String sProcFilename = Helpers.Process.GetFilename(process);
 
-            processListBox.EndUpdate();
+                ListViewItem lvi = new ListViewItem(process.Id.ToString());
+
+                lvi.SubItems.Add(process.ProcessName);
+                lvi.SubItems.Add(process.MainWindowTitle);
+                lvi.SubItems.Add(sProcFilename);
+
+                processListView.Items.Add(lvi);
+            }
         }
 
         private void InitializeMethodComboBox()
@@ -74,7 +101,7 @@ namespace YADI
                         {
                             methodStr = "SetWindowsHook";
                             break;
-                        }
+                        } 
                     case (ushort)InjectionMethod.ThreadHijack:
                         {
                             methodStr = "Thread Hijack";
@@ -169,30 +196,7 @@ namespace YADI
 
         private void searchTextBox_TextChanged(object sender, EventArgs e)
         {
-            Process[] processCollection = Process.GetProcesses();
-
-            if (searchTextBox.Text.Length == 0)
-            {
-                InitializeProcessList();
-                return;
-            }
-
-            processListBox.Items.Clear();
-
-            foreach (Process p in processCollection)
-            {
-                if (p.Id == 0)
-                {
-                    continue;
-                }
-
-                if (p.ProcessName.Contains(searchTextBox.Text))
-                {
-                    processListBox.Items.Add(p.Id.ToString() + " - " + p.ProcessName);
-                }
-            }
-
-            processListBox.EndUpdate();
+            PopulateProcessListView(searchTextBox.Text);
         }
 
         private void DllPathText_TextChanged(object sender, EventArgs e)
@@ -200,32 +204,6 @@ namespace YADI
             if (config != null && config.RememberLastDllPath())
             {
                 config.SetLastDllPath(DllPathText.Text);
-            }
-        }
-
-        private void processListBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            String selected = (String)processListBox.SelectedItem;
-
-            if (selected == null)
-            {
-                return;
-            }
-
-            int loc = selected.IndexOf(" ");
-
-            if (loc > 0)
-            {
-                String pid_str = selected.Substring(0, loc);
-
-                if (int.TryParse(pid_str, out int p))
-                {
-                    this.selectedProcess = Process.GetProcessById(p);
-                }
-                else
-                {
-                    this.selectedProcess = null;
-                }
             }
         }
 
@@ -275,6 +253,15 @@ namespace YADI
                         }
                         break;
                     }
+            }
+        }
+
+        private void processListView_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            foreach (ListViewItem item in processListView.SelectedItems)
+            {
+                item.Selected = true;
+                item.Focused = true;
             }
         }
     }

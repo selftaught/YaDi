@@ -246,5 +246,12 @@ namespace YADI.Externals
          */
         [DllImport("kernel32.dll")]
         public static extern UInt32 QueueUserAPC(IntPtr pfnAPC, IntPtr hThread, IntPtr dwData);
+
+        /**
+         * QueryFullProcessImageName
+         * https://docs.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-queryfullprocessimagenamea
+         */
+        [DllImport("kernel32.dll", SetLastError = true)]
+        public static extern bool QueryFullProcessImageName([In] IntPtr hProcess, [In] int dwFlags, [Out] StringBuilder lpExeName, ref int lpdwSize);
     }
 }

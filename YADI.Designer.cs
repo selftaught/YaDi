@@ -42,13 +42,13 @@ namespace YADI
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
-            this.processListBox = new System.Windows.Forms.ListBox();
             this.colorDialog2 = new System.Windows.Forms.ColorDialog();
             this.searchTextBox = new System.Windows.Forms.TextBox();
             this.processSearchrLabel = new System.Windows.Forms.Label();
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
             this.colorDialog3 = new System.Windows.Forms.ColorDialog();
             this.injectionMethComboBox = new System.Windows.Forms.ComboBox();
+            this.processListView = new System.Windows.Forms.ListView();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.SuspendLayout();
@@ -56,10 +56,10 @@ namespace YADI
             // InjectButton
             // 
             this.InjectButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.InjectButton.Location = new System.Drawing.Point(36, 405);
-            this.InjectButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.InjectButton.Location = new System.Drawing.Point(434, 62);
+            this.InjectButton.Margin = new System.Windows.Forms.Padding(4);
             this.InjectButton.Name = "InjectButton";
-            this.InjectButton.Size = new System.Drawing.Size(371, 47);
+            this.InjectButton.Size = new System.Drawing.Size(204, 119);
             this.InjectButton.TabIndex = 0;
             this.InjectButton.Text = "Inject";
             this.InjectButton.UseVisualStyleBackColor = true;
@@ -69,7 +69,7 @@ namespace YADI
             // 
             this.Browse.Image = ((System.Drawing.Image)(resources.GetObject("Browse.Image")));
             this.Browse.Location = new System.Drawing.Point(316, 62);
-            this.Browse.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Browse.Margin = new System.Windows.Forms.Padding(4);
             this.Browse.Name = "Browse";
             this.Browse.Size = new System.Drawing.Size(91, 28);
             this.Browse.TabIndex = 2;
@@ -79,7 +79,7 @@ namespace YADI
             // DllPathText
             // 
             this.DllPathText.Location = new System.Drawing.Point(36, 62);
-            this.DllPathText.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.DllPathText.Margin = new System.Windows.Forms.Padding(4);
             this.DllPathText.Multiline = true;
             this.DllPathText.Name = "DllPathText";
             this.DllPathText.Size = new System.Drawing.Size(271, 25);
@@ -116,7 +116,7 @@ namespace YADI
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Padding = new System.Windows.Forms.Padding(5, 2, 0, 2);
-            this.menuStrip1.Size = new System.Drawing.Size(451, 28);
+            this.menuStrip1.Size = new System.Drawing.Size(675, 28);
             this.menuStrip1.TabIndex = 11;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -137,17 +137,6 @@ namespace YADI
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
             this.helpToolStripMenuItem.Size = new System.Drawing.Size(55, 24);
             this.helpToolStripMenuItem.Text = "Help";
-            // 
-            // processListBox
-            // 
-            this.processListBox.FormattingEnabled = true;
-            this.processListBox.ItemHeight = 16;
-            this.processListBox.Location = new System.Drawing.Point(36, 203);
-            this.processListBox.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.processListBox.Name = "processListBox";
-            this.processListBox.Size = new System.Drawing.Size(369, 180);
-            this.processListBox.TabIndex = 16;
-            this.processListBox.SelectedIndexChanged += new System.EventHandler(this.processListBox_SelectedIndexChanged);
             // 
             // searchTextBox
             // 
@@ -182,21 +171,36 @@ namespace YADI
             "SetWindowsHookEx",
             "Thread Hijack / SIR (Suspend, Inject, Resume)"});
             this.injectionMethComboBox.Location = new System.Drawing.Point(36, 107);
-            this.injectionMethComboBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.injectionMethComboBox.Margin = new System.Windows.Forms.Padding(4);
             this.injectionMethComboBox.Name = "injectionMethComboBox";
             this.injectionMethComboBox.Size = new System.Drawing.Size(369, 24);
             this.injectionMethComboBox.TabIndex = 19;
             this.injectionMethComboBox.SelectedIndexChanged += new System.EventHandler(this.injectionMethComboBox_SelectedIndexChanged);
             // 
+            // processListView
+            // 
+            this.processListView.AllowColumnReorder = true;
+            this.processListView.FullRowSelect = true;
+            this.processListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.processListView.HideSelection = false;
+            this.processListView.Location = new System.Drawing.Point(35, 197);
+            this.processListView.MultiSelect = false;
+            this.processListView.Name = "processListView";
+            this.processListView.Size = new System.Drawing.Size(603, 235);
+            this.processListView.TabIndex = 20;
+            this.processListView.UseCompatibleStateImageBehavior = false;
+            this.processListView.View = System.Windows.Forms.View.Details;
+            this.processListView.SelectedIndexChanged += new System.EventHandler(this.processListView_SelectedIndexChanged);
+            // 
             // YADI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(451, 477);
+            this.ClientSize = new System.Drawing.Size(675, 469);
+            this.Controls.Add(this.processListView);
             this.Controls.Add(this.injectionMethComboBox);
             this.Controls.Add(this.processSearchrLabel);
             this.Controls.Add(this.searchTextBox);
-            this.Controls.Add(this.processListBox);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.DllPathText);
@@ -209,7 +213,7 @@ namespace YADI
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.MaximizeBox = false;
             this.Name = "YADI";
-            this.Text = " ";
+            this.Text = "YaDi";
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
@@ -231,13 +235,13 @@ namespace YADI
         private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
         private System.Windows.Forms.ColorDialog colorDialog1;
-        private System.Windows.Forms.ListBox processListBox;
         private System.Windows.Forms.ColorDialog colorDialog2;
         private System.Windows.Forms.TextBox searchTextBox;
         private System.Windows.Forms.Label processSearchrLabel;
         private System.Windows.Forms.ErrorProvider errorProvider1;
         private System.Windows.Forms.ColorDialog colorDialog3;
         private System.Windows.Forms.ComboBox injectionMethComboBox;
+        private System.Windows.Forms.ListView processListView;
     }
 }
 

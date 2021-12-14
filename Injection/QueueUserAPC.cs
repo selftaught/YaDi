@@ -33,7 +33,7 @@ namespace YADI.Injection
 
             if (procHandle == null)
             {
-                MessageBox.Show("Couldn't get process handle...");
+                MessageBox.Show("Couldn't get a handle on PID " + this.pid + "...");
                 return false;
             }
 

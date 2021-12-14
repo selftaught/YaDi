@@ -78,12 +78,15 @@
     <Compile Include="Enums\AllocationProtect.cs" />
     <Compile Include="Enums\ContextFlags.cs" />
     <Compile Include="Enums\InjectionMethod.cs" />
+    <Compile Include="Enums\ProcessAccess.cs" />
     <Compile Include="Enums\State.cs" />
     <Compile Include="Enums\ThreadAccess.cs" />
     <Compile Include="Enums\Type.cs" />
     <Compile Include="Externals\Kernel32.cs" />
     <Compile Include="Externals\PSAPI.cs" />
     <Compile Include="Externals\User32.cs" />
+    <Compile Include="Helpers\Misc.cs" />
+    <Compile Include="Helpers\Process.cs" />
     <Compile Include="Injection\QueueUserAPC.cs" />
     <Compile Include="Injection\IATHook.cs" />
     <Compile Include="Injection\ThreadHijack.cs" />
