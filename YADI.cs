@@ -23,8 +23,6 @@ namespace YADI
     {
         private String selectedDllPath = String.Empty;
         private int selectedProcessID = 0;
-        private double processListViewLastUpdatedAt = 0;
-        private double processListViewUpdateDelay = 0.500; // 500ms
         private InjectionMethod selectedInjectMeth = InjectionMethod.LoadLibrary;
         private Structs.Config config;
 
@@ -50,7 +48,7 @@ namespace YADI
         {
             processListView.Columns.Add("PID", 50);
             processListView.Columns.Add("Name", 150);
-            processListView.Columns.Add("Title", 150);
+            processListView.Columns.Add("Title", 80);
             processListView.Columns.Add("Path", 150);
 
             PopulateProcessListView(String.Empty);
@@ -58,13 +56,6 @@ namespace YADI
 
         private void PopulateProcessListView(String filter)
         {
-            double now = Helpers.Misc.Epoch();
-
-            if ((now - processListViewLastUpdatedAt) < processListViewUpdateDelay)
-            {
-                return;
-            }
-
             // Clear the list of any items
             processListView.Items.Clear();
 
@@ -72,7 +63,7 @@ namespace YADI
 
             foreach (Process process in Process.GetProcesses())
             {
-                if (filter.Length > 0 && !process.ProcessName.Contains(filter))
+                if ((filter.Length > 0 && !process.ProcessName.Contains(filter)) || (process.Id == 0))
                 {
                     continue;
                 }
@@ -278,7 +269,6 @@ namespace YADI
                 {
                     selectedProcessID = pid;
                     InjectButton_TryEnable();
-                    Console.WriteLine("Selected PID: " + selectedProcessID);
                     return;
                 }
             }

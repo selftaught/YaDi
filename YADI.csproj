@@ -94,6 +94,7 @@
     <Compile Include="Injection\SetWindowsHookEx.cs" />
     <Compile Include="Structs\Config.cs" />
     <Compile Include="Structs\Context64.cs" />
+    <Compile Include="Structs\LvItem.cs" />
     <Compile Include="Structs\M128A.cs" />
     <Compile Include="Structs\MemBasicInfo.cs" />
     <Compile Include="Structs\Module.cs" />
