@@ -21,8 +21,8 @@ namespace YADI
 {
     public partial class YADI : Form
     {
-        private String  selectedDllPath = null;
-        private Process selectedProcess = null;
+        private String selectedDllPath = String.Empty;
+        private int selectedProcessID = 0;
         private double processListViewLastUpdatedAt = 0;
         private double processListViewUpdateDelay = 0.500; // 500ms
         private InjectionMethod selectedInjectMeth = InjectionMethod.LoadLibrary;
@@ -49,11 +49,11 @@ namespace YADI
         private void InitializeProcessListView()
         {
             processListView.Columns.Add("PID", 50);
-            processListView.Columns.Add("Name", 100);
-            processListView.Columns.Add("Title", 75);
-            processListView.Columns.Add("Path", 100);
+            processListView.Columns.Add("Name", 150);
+            processListView.Columns.Add("Title", 150);
+            processListView.Columns.Add("Path", 150);
 
-            PopulateProcessListView("");
+            PopulateProcessListView(String.Empty);
         }
 
         private void PopulateProcessListView(String filter)
@@ -159,35 +159,33 @@ namespace YADI
 
         private void InjectButton_Click(object sender, EventArgs e)
         {
-            if (selectedProcess != null && DllPathText.Text.Length > 0)
+            if (selectedProcessID > 0 && DllPathText.Text.Length > 0)
             {
-                int pid = selectedProcess.Id;
-
                 switch(this.selectedInjectMeth)
                 {
                     case InjectionMethod.LoadLibrary:
                     {
-                        (new LoadLibrary(pid)).Inject(DllPathText.Text);
+                        (new LoadLibrary(selectedProcessID)).Inject(DllPathText.Text);
                         break;
                     }
                     case InjectionMethod.SetWindowsHook:
                     {
-                        (new SetWindowsHookEx(pid)).Inject(DllPathText.Text);
+                        (new SetWindowsHookEx(selectedProcessID)).Inject(DllPathText.Text);
                         break;
                     }
                     case InjectionMethod.ThreadHijack:
                     {
-                        (new ThreadHijack(pid)).Inject(DllPathText.Text);
+                        (new ThreadHijack(selectedProcessID)).Inject(DllPathText.Text);
                         break;
                     }
                     case InjectionMethod.IATHook:
                     {
-                        (new IATHook(pid)).Inject(DllPathText.Text);
+                        (new IATHook(selectedProcessID)).Inject(DllPathText.Text);
                         break;
                     }
                     case InjectionMethod.QueueUserAPC:
                     {
-                        (new QueueUserAPC(pid)).Inject(DllPathText.Text);
+                        (new QueueUserAPC(selectedProcessID)).Inject(DllPathText.Text);
                         break;
                     }
                 }
@@ -197,6 +195,7 @@ namespace YADI
         private void searchTextBox_TextChanged(object sender, EventArgs e)
         {
             PopulateProcessListView(searchTextBox.Text);
+            InjectButton_TryEnable();
         }
 
         private void DllPathText_TextChanged(object sender, EventArgs e)
@@ -204,6 +203,22 @@ namespace YADI
             if (config != null && config.RememberLastDllPath())
             {
                 config.SetLastDllPath(DllPathText.Text);
+            }
+
+            selectedDllPath = DllPathText.Text;
+
+            InjectButton_TryEnable();
+        }
+
+        private void InjectButton_TryEnable()
+        {
+            if (File.Exists(selectedDllPath) && selectedProcessID > 0)
+            {
+                InjectButton.Enabled = true;
+            }
+            else
+            {
+                InjectButton.Enabled = false;
             }
         }
 
@@ -258,10 +273,14 @@ namespace YADI
 
         private void processListView_SelectedIndexChanged(object sender, EventArgs e)
         {
-            foreach (ListViewItem item in processListView.SelectedItems)
-            {
-                item.Selected = true;
-                item.Focused = true;
+            foreach (ListViewItem item in processListView.SelectedItems) {
+                if (Int32.TryParse(item.Text, out int pid))
+                {
+                    selectedProcessID = pid;
+                    InjectButton_TryEnable();
+                    Console.WriteLine("Selected PID: " + selectedProcessID);
+                    return;
+                }
             }
         }
     }
