@@ -39,7 +39,6 @@ Loads a specified module into the address space of the calling process. The spec
 - Easy detection
 
 ### SetWindowsHookEx
-0
 ---
 
 Installs an application-defined hook procedure into a hook chain which is then invoked whenever certain events are triggered.
