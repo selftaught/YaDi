@@ -84,6 +84,7 @@ namespace YADI.Injection
 #if DEBUG
             Console.WriteLine("Successfully wrote " + bytesWritten.ToUInt32() + " to process memory");
 
+
             bool bReadMemory = Kernel32.ReadProcessMemory(procHandle, dllPathBaseAddr, buffer, buffer.Length, out bytesRead);
 
             if (bReadMemory)
@@ -134,6 +135,7 @@ namespace YADI.Injection
             }
 
             Kernel32.CloseHandle(procHandle);
+
             return true;
         }
 

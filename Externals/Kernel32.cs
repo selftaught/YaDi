@@ -45,200 +45,126 @@ namespace YADI.Externals
          * https://docs.microsoft.com/en-us/windows/win32/api/processthreadsapi/nf-processthreadsapi-openprocess
          */
         [DllImport("kernel32.dll")]
-        public static extern IntPtr OpenProcess(
-            uint dwDesiredAccess,
-            bool bInheritHandle,
-
-            uint dwProcessId
-        );
+        public static extern IntPtr OpenProcess(uint dwDesiredAccess, bool bInheritHandle, uint dwProcessId);
 
         /**
          * VirtualAllocEx
          * https://docs.microsoft.com/en-us/windows/win32/api/memoryapi/nf-memoryapi-virtualallocex
          */
         [DllImport("kernel32.dll", SetLastError = true, ExactSpelling = true)]
-        public static extern IntPtr VirtualAllocEx(
-            IntPtr hProcess,
-            IntPtr lpAddress,
-            uint dwSize,
-            uint flAllocationType,
-            uint flProtect
-        );
+        public static extern IntPtr VirtualAllocEx(IntPtr hProcess, IntPtr lpAddress, uint dwSize, uint flAllocationType, uint flProtect);
 
         /**
          * VirtualFreeEx
          * https://docs.microsoft.com/en-us/windows/win32/api/memoryapi/nf-memoryapi-virtualfreeex
          */
         [DllImport("kernel32.dll", SetLastError = true, ExactSpelling = true)]
-        public static extern bool VirtualFreeEx(
-            IntPtr hProcess,
-            IntPtr lpAddress,
-            uint dwSize,
-            uint dwFreeType
-        );
+        public static extern bool VirtualFreeEx(IntPtr hProcess, IntPtr lpAddress, uint dwSize, uint dwFreeType);
 
         /**
         * VirtualQueryEx
         * https://docs.microsoft.com/en-us/windows/win32/api/memoryapi/nf-memoryapi-virtualfreeex
         */
         [DllImport("kernel32.dll", SetLastError = true, ExactSpelling = true)]
-        public static extern bool VirtualQueryEx(
-            IntPtr hProcess,
-            IntPtr lpAddress,
-            out Structs.MemBasicInfo lpBuffer,
-            uint dwLength
-        );
+        public static extern bool VirtualQueryEx(IntPtr hProcess, IntPtr lpAddress, out Structs.MemBasicInfo lpBuffer, uint dwLength);
 
         /**
          * VirtualProtectEx
          * https://docs.microsoft.com/en-us/windows/win32/api/memoryapi/nf-memoryapi-virtualprotectex
          */
         [DllImport("kernel32.dll", SetLastError = true, ExactSpelling = true)]
-        public static extern bool VirtualProtectEx(
-            IntPtr hProcess,
-            IntPtr lpAddr,
-            uint dwSize,
-            uint flNewProtect,
-            out UIntPtr lpflOldProtect
-        );
+        public static extern bool VirtualProtectEx(IntPtr hProcess, IntPtr lpAddr, uint dwSize, uint flNewProtect, out UIntPtr lpflOldProtect);
 
         /**
          * GetThreadContext 
          * https://docs.microsoft.com/en-us/windows/win32/api/processthreadsapi/nf-processthreadsapi-getthreadcontext
          */
         [DllImport("kernel32.dll", SetLastError = true)]
-        public static extern bool GetThreadContext(
-            IntPtr hProcess,
-            ref Structs.Context64 lpContext
-        );
+        public static extern bool GetThreadContext(IntPtr hProcess, ref Structs.Context64 lpContext);
 
         /**
          * SetThreadContext
          * https://docs.microsoft.com/en-us/windows/win32/api/processthreadsapi/nf-processthreadsapi-setthreadcontext
          */
         [DllImport("kernel32.dll", SetLastError = true)]
-        public static extern bool SetThreadContext(
-            IntPtr hThread,
-            ref Structs.Context64 lpContext
-        );
+        public static extern bool SetThreadContext(IntPtr hThread, ref Structs.Context64 lpContext);
 
         /**
          * OpenThread
          * https://docs.microsoft.com/en-us/windows/win32/api/processthreadsapi/nf-processthreadsapi-openthread
          */
         [DllImport("kernel32.dll")]
-        public static extern IntPtr OpenThread(
-            ThreadAccess dwDesiredAccess,
-            bool bInheritHandle,
-            uint dwThreadId
-        );
+        public static extern IntPtr OpenThread(ThreadAccess dwDesiredAccess, bool bInheritHandle, uint dwThreadId);
 
         /**
          * SuspendThread
          * https://docs.microsoft.com/en-us/windows/win32/api/processthreadsapi/nf-processthreadsapi-suspendthread
          */
         [DllImport("kernel32.dll")]
-        public static extern int SuspendThread(
-            IntPtr hThread
-        );
+        public static extern int SuspendThread(IntPtr hThread);
 
         /**
          * ResumeThread
          * https://docs.microsoft.com/en-us/windows/win32/api/processthreadsapi/nf-processthreadsapi-resumethread
          */
         [DllImport("kernel32.dll")]
-        public static extern int ResumeThread(
-            IntPtr hThread
-        );
+        public static extern int ResumeThread(IntPtr hThread);
 
         /**
          * GetModuleHandle
          * https://docs.microsoft.com/en-us/windows/win32/api/libloaderapi/nf-libloaderapi-getmodulehandlea
          */
         [DllImport("kernel32.dll", CharSet = CharSet.Auto)]
-        public static extern IntPtr GetModuleHandle(
-            string lpModuleName
-        );
+        public static extern IntPtr GetModuleHandle(string lpModuleName);
 
         /**
          * CloseHandle
          * https://docs.microsoft.com/en-us/windows/win32/api/handleapi/nf-handleapi-closehandle
          */
         [DllImport("kernel32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-        public static extern bool CloseHandle(
-            IntPtr handle
-        );
+        public static extern bool CloseHandle(IntPtr handle);
 
         /**
          * GetProcAddress
          * https://docs.microsoft.com/en-us/windows/win32/api/libloaderapi/nf-libloaderapi-getprocaddress
          */
         [DllImport("kernel32.dll", CharSet = CharSet.Ansi, ExactSpelling = true, SetLastError = true)]
-        public static extern IntPtr GetProcAddress(
-            IntPtr hModule,
-            string procName
-        );
+        public static extern IntPtr GetProcAddress(IntPtr hModule,string procName);
 
         /**
          * WriteProcessMemory
          * https://docs.microsoft.com/en-us/windows/win32/api/memoryapi/nf-memoryapi-writeprocessmemory
          */
         [DllImport("kernel32.dll", SetLastError = true)]
-        public static extern bool WriteProcessMemory(
-            IntPtr hProcess,
-            IntPtr lpBaseAddress,
-            byte[] lpBuffer,
-            uint nSize,
-            out UIntPtr lpNumberOfBytesWritten
-        );
+        public static extern bool WriteProcessMemory(IntPtr hProcess, IntPtr lpBaseAddress, byte[] lpBuffer, uint nSize, out UIntPtr lpNumberOfBytesWritten);
 
         /**
          * ReadProcessMemory
          * https://docs.microsoft.com/en-us/windows/win32/api/memoryapi/nf-memoryapi-readprocessmemory
          */
         [DllImport("kernel32.dll")]
-        public static extern bool ReadProcessMemory(
-            IntPtr hProcess,
-            IntPtr lpBaseAddress,
-            byte[] lpBuffer,
-            int dwSize,
-            out UIntPtr lpNumberOfBytesRead
-        );
+        public static extern bool ReadProcessMemory(IntPtr hProcess, IntPtr lpBaseAddress, byte[] lpBuffer, int dwSize, out UIntPtr lpNumberOfBytesRead);
 
         /**
         * CreateRemoteThread
         * https://docs.microsoft.com/en-us/windows/win32/api/processthreadsapi/nf-processthreadsapi-createremotethread
         */
         [DllImport("kernel32.dll")]
-        public static extern IntPtr CreateRemoteThread(
-            IntPtr hProcess,
-            IntPtr lpThreadAttributes,
-            uint dwStackSize,
-            IntPtr lpStartAddress,
-            IntPtr lpParameter,
-            uint dwCreationFlags,
-            IntPtr lpThreadId
-        );
+        public static extern IntPtr CreateRemoteThread(IntPtr hProcess, IntPtr lpThreadAttributes, uint dwStackSize, IntPtr lpStartAddress, IntPtr lpParameter, uint dwCreationFlags, IntPtr lpThreadId);
 
         /**
          * WaitForSingleObject
          * https://docs.microsoft.com/en-us/windows/win32/api/synchapi/nf-synchapi-waitforsingleobject
          */
         [DllImport("kernel32.dll")]
-        public static extern ulong WaitForSingleObject(
-            IntPtr hHandle,
-            uint dwMilliseconds
-        );
+        public static extern ulong WaitForSingleObject(IntPtr hHandle, uint dwMilliseconds);
 
         /**
          * GetExitCodeThread
          * https://docs.microsoft.com/en-us/windows/win32/api/processthreadsapi/nf-processthreadsapi-getexitcodethread
          */
         [DllImport("kernel32.dll")]
-        public static extern bool GetExitCodeThread(
-            IntPtr hThread,
-            out UIntPtr lpExitCode
-        );
+        public static extern bool GetExitCodeThread(IntPtr hThread, out UIntPtr lpExitCode);
 
         /**
          * QueueUserAPC
