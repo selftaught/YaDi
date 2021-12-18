@@ -49,6 +49,7 @@ namespace YADI
             this.colorDialog3 = new System.Windows.Forms.ColorDialog();
             this.injectionMethComboBox = new System.Windows.Forms.ComboBox();
             this.ProcessListView = new System.Windows.Forms.ListView();
+            this.label3 = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.SuspendLayout();
@@ -141,7 +142,7 @@ namespace YADI
             // 
             // SearchTextBox
             // 
-            this.SearchTextBox.Location = new System.Drawing.Point(36, 159);
+            this.SearchTextBox.Location = new System.Drawing.Point(35, 160);
             this.SearchTextBox.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.SearchTextBox.Name = "SearchTextBox";
             this.SearchTextBox.Size = new System.Drawing.Size(369, 22);
@@ -171,7 +172,7 @@ namespace YADI
             "Reflective",
             "SetWindowsHookEx",
             "Thread Hijack / SIR (Suspend, Inject, Resume)"});
-            this.injectionMethComboBox.Location = new System.Drawing.Point(36, 107);
+            this.injectionMethComboBox.Location = new System.Drawing.Point(35, 111);
             this.injectionMethComboBox.Margin = new System.Windows.Forms.Padding(4);
             this.injectionMethComboBox.Name = "injectionMethComboBox";
             this.injectionMethComboBox.Size = new System.Drawing.Size(369, 24);
@@ -193,11 +194,21 @@ namespace YADI
             this.ProcessListView.View = System.Windows.Forms.View.Details;
             this.ProcessListView.SelectedIndexChanged += new System.EventHandler(this.ProcessListView_SelectedIndexChanged);
             // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(33, 91);
+            this.label3.Name = "MethodLabel";
+            this.label3.Size = new System.Drawing.Size(46, 17);
+            this.label3.TabIndex = 21;
+            this.label3.Text = "Method";
+            // 
             // YADI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(675, 469);
+            this.Controls.Add(this.label3);
             this.Controls.Add(this.ProcessListView);
             this.Controls.Add(this.injectionMethComboBox);
             this.Controls.Add(this.processSearchrLabel);
@@ -242,6 +253,7 @@ namespace YADI
         private System.Windows.Forms.ColorDialog colorDialog3;
         private System.Windows.Forms.ComboBox injectionMethComboBox;
         private System.Windows.Forms.ListView ProcessListView;
+        private System.Windows.Forms.Label label3;
     }
 }
 

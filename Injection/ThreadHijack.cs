@@ -62,6 +62,7 @@ namespace YADI.Injection
             ctx64.ContextFlags = Enums.ContextFlags.CONTEXT_FULL;
 
             if (!Kernel32.GetThreadContext(pOpenThread, ref ctx64))
+
             {
                 Console.WriteLine("Couldn't get thread context...");
                 Kernel32.ResumeThread(pOpenThread);
@@ -132,7 +133,7 @@ namespace YADI.Injection
 #endif
 
             Kernel32.ResumeThread(pOpenThread);
-            Kernel32.CloseHandle(pOpenThread);
+            Kernel32.CloseHandle (pOpenThread);
 
             return true;
         }
