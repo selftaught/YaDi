@@ -59,6 +59,7 @@ namespace YADI.Externals
          * https://docs.microsoft.com/en-us/windows/win32/api/memoryapi/nf-memoryapi-virtualfreeex
          */
         [DllImport("kernel32.dll", SetLastError = true, ExactSpelling = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool VirtualFreeEx(IntPtr hProcess, IntPtr lpAddress, uint dwSize, uint dwFreeType);
 
         /**
@@ -66,6 +67,7 @@ namespace YADI.Externals
         * https://docs.microsoft.com/en-us/windows/win32/api/memoryapi/nf-memoryapi-virtualfreeex
         */
         [DllImport("kernel32.dll", SetLastError = true, ExactSpelling = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool VirtualQueryEx(IntPtr hProcess, IntPtr lpAddress, out Structs.MemBasicInfo lpBuffer, uint dwLength);
 
         /**
@@ -73,6 +75,7 @@ namespace YADI.Externals
          * https://docs.microsoft.com/en-us/windows/win32/api/memoryapi/nf-memoryapi-virtualprotectex
          */
         [DllImport("kernel32.dll", SetLastError = true, ExactSpelling = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool VirtualProtectEx(IntPtr hProcess, IntPtr lpAddr, uint dwSize, uint flNewProtect, out UIntPtr lpflOldProtect);
 
         /**
@@ -80,6 +83,7 @@ namespace YADI.Externals
          * https://docs.microsoft.com/en-us/windows/win32/api/processthreadsapi/nf-processthreadsapi-getthreadcontext
          */
         [DllImport("kernel32.dll", SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool GetThreadContext(IntPtr hProcess, ref Structs.Context64 lpContext);
 
         /**
@@ -87,6 +91,7 @@ namespace YADI.Externals
          * https://docs.microsoft.com/en-us/windows/win32/api/processthreadsapi/nf-processthreadsapi-setthreadcontext
          */
         [DllImport("kernel32.dll", SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool SetThreadContext(IntPtr hThread, ref Structs.Context64 lpContext);
 
         /**
@@ -122,6 +127,7 @@ namespace YADI.Externals
          * https://docs.microsoft.com/en-us/windows/win32/api/handleapi/nf-handleapi-closehandle
          */
         [DllImport("kernel32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool CloseHandle(IntPtr handle);
 
         /**
@@ -136,6 +142,7 @@ namespace YADI.Externals
          * https://docs.microsoft.com/en-us/windows/win32/api/memoryapi/nf-memoryapi-writeprocessmemory
          */
         [DllImport("kernel32.dll", SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool WriteProcessMemory(IntPtr hProcess, IntPtr lpBaseAddress, byte[] lpBuffer, uint nSize, out UIntPtr lpNumberOfBytesWritten);
 
         /**
@@ -143,6 +150,7 @@ namespace YADI.Externals
          * https://docs.microsoft.com/en-us/windows/win32/api/memoryapi/nf-memoryapi-readprocessmemory
          */
         [DllImport("kernel32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool ReadProcessMemory(IntPtr hProcess, IntPtr lpBaseAddress, byte[] lpBuffer, int dwSize, out UIntPtr lpNumberOfBytesRead);
 
         /**
@@ -164,6 +172,7 @@ namespace YADI.Externals
          * https://docs.microsoft.com/en-us/windows/win32/api/processthreadsapi/nf-processthreadsapi-getexitcodethread
          */
         [DllImport("kernel32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool GetExitCodeThread(IntPtr hThread, out UIntPtr lpExitCode);
 
         /**
@@ -178,6 +187,7 @@ namespace YADI.Externals
          * https://docs.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-queryfullprocessimagenamea
          */
         [DllImport("kernel32.dll", SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool QueryFullProcessImageName([In] IntPtr hProcess, [In] int dwFlags, [Out] StringBuilder lpExeName, ref int lpdwSize);
 
         /**
