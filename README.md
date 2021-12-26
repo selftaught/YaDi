@@ -10,17 +10,7 @@ YADI is a Windows DLL injector that provides different techniques of injection. 
 
 ## Usage
 
-### GUI
-
-1. Run yadi-gui.exe
-2. Select DLL path
-3. Select DLL injection method
-4. Select target process from process list
-5. Click Inject
-
-### CLI
-
-`yadi.exe <pid> <dllpath> <injectionmethod>`
+`@TODO`
 
 ## Injection Methods
 
