@@ -34,6 +34,7 @@ namespace YADI
             InitializeDllPathInput();
             InitializeProcessListView();
             InitializeMethodComboBox();
+            InitializeArchitectureRadioButtons();
         }
 
         private void InitializeDllPathInput()
@@ -56,7 +57,6 @@ namespace YADI
 
         private void PopulateProcessListView(String filter)
         {
-            // Clear the list of any items
             ProcessListView.Items.Clear();
 
             List<String> processStrings = new List<String>();
@@ -110,6 +110,19 @@ namespace YADI
                     injectionMethComboBox.SelectedIndex = i;
                     break;
                 }
+            }
+        }
+
+        private void InitializeArchitectureRadioButtons()
+        {
+            /**
+             * Disable the x64 radio button if we detect
+             * that we're running as 32 bit / x86.
+             */
+            if (!Environment.Is64BitProcess)
+            {
+                x64RadioButton.Enabled = false;
+                x86RadioButton.Checked = true;
             }
         }
 
@@ -272,6 +285,11 @@ namespace YADI
                     return;
                 }
             }
+        }
+
+        private void x64RadioButton_CheckedChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

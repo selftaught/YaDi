@@ -117,13 +117,13 @@ namespace YADI.Injection
                 return false;
             }
 
-            ulong wfso_rc = Kernel32.WaitForSingleObject(RemoteThread, Kernel32.WFSO_INFINITE);
-            UIntPtr thread_exit_code;
-            Kernel32.GetExitCodeThread(RemoteThread, out thread_exit_code);
+           // ulong wfso_rc = Kernel32.WaitForSingleObject(RemoteThread, Kernel32.WFSO_INFINITE);
+           // UIntPtr thread_exit_code;
+           // Kernel32.GetExitCodeThread(RemoteThread, out thread_exit_code);
 
 #if DEBUG
-            Console.WriteLine("WaitForSingleObject returned: " + wfso_rc);
-            Console.WriteLine("Thread exited with code: " + thread_exit_code);
+           // Console.WriteLine("WaitForSingleObject returned: " + wfso_rc);
+           // Console.WriteLine("Thread exited with code: " + thread_exit_code);
 #endif
 
             if (!Kernel32.VirtualFreeEx(procHandle, dllPathBaseAddr, 0, Kernel32.MEM_RELEASE))

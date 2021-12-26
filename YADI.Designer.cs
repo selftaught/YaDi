@@ -50,6 +50,8 @@ namespace YADI
             this.injectionMethComboBox = new System.Windows.Forms.ComboBox();
             this.ProcessListView = new System.Windows.Forms.ListView();
             this.label3 = new System.Windows.Forms.Label();
+            this.x86RadioButton = new System.Windows.Forms.RadioButton();
+            this.x64RadioButton = new System.Windows.Forms.RadioButton();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.SuspendLayout();
@@ -61,7 +63,7 @@ namespace YADI
             this.InjectButton.Location = new System.Drawing.Point(434, 62);
             this.InjectButton.Margin = new System.Windows.Forms.Padding(4);
             this.InjectButton.Name = "InjectButton";
-            this.InjectButton.Size = new System.Drawing.Size(204, 119);
+            this.InjectButton.Size = new System.Drawing.Size(204, 159);
             this.InjectButton.TabIndex = 0;
             this.InjectButton.Text = "Inject";
             this.InjectButton.UseVisualStyleBackColor = true;
@@ -154,9 +156,9 @@ namespace YADI
             this.processSearchrLabel.AutoSize = true;
             this.processSearchrLabel.Location = new System.Drawing.Point(32, 139);
             this.processSearchrLabel.Name = "processSearchrLabel";
-            this.processSearchrLabel.Size = new System.Drawing.Size(53, 17);
+            this.processSearchrLabel.Size = new System.Drawing.Size(108, 17);
             this.processSearchrLabel.TabIndex = 18;
-            this.processSearchrLabel.Text = "Search";
+            this.processSearchrLabel.Text = "Process Search";
             // 
             // errorProvider1
             // 
@@ -185,10 +187,10 @@ namespace YADI
             this.ProcessListView.FullRowSelect = true;
             this.ProcessListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.ProcessListView.HideSelection = false;
-            this.ProcessListView.Location = new System.Drawing.Point(35, 203);
+            this.ProcessListView.Location = new System.Drawing.Point(35, 242);
             this.ProcessListView.MultiSelect = false;
             this.ProcessListView.Name = "ProcessListView";
-            this.ProcessListView.Size = new System.Drawing.Size(603, 229);
+            this.ProcessListView.Size = new System.Drawing.Size(603, 276);
             this.ProcessListView.TabIndex = 20;
             this.ProcessListView.UseCompatibleStateImageBehavior = false;
             this.ProcessListView.View = System.Windows.Forms.View.Details;
@@ -198,16 +200,42 @@ namespace YADI
             // 
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(33, 91);
-            this.label3.Name = "MethodLabel";
-            this.label3.Size = new System.Drawing.Size(46, 17);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(55, 17);
             this.label3.TabIndex = 21;
             this.label3.Text = "Method";
+            // 
+            // x86RadioButton
+            // 
+            this.x86RadioButton.AutoSize = true;
+            this.x86RadioButton.Location = new System.Drawing.Point(36, 200);
+            this.x86RadioButton.Name = "x86RadioButton";
+            this.x86RadioButton.Size = new System.Drawing.Size(109, 21);
+            this.x86RadioButton.TabIndex = 22;
+            this.x86RadioButton.TabStop = true;
+            this.x86RadioButton.Text = "x86 ( 32-bit )";
+            this.x86RadioButton.UseVisualStyleBackColor = true;
+            // 
+            // x64RadioButton
+            // 
+            this.x64RadioButton.AutoSize = true;
+            this.x64RadioButton.Checked = true;
+            this.x64RadioButton.Location = new System.Drawing.Point(213, 200);
+            this.x64RadioButton.Name = "x64RadioButton";
+            this.x64RadioButton.Size = new System.Drawing.Size(109, 21);
+            this.x64RadioButton.TabIndex = 23;
+            this.x64RadioButton.TabStop = true;
+            this.x64RadioButton.Text = "x64 ( 64-bit )";
+            this.x64RadioButton.UseVisualStyleBackColor = true;
+            this.x64RadioButton.CheckedChanged += new System.EventHandler(this.x64RadioButton_CheckedChanged);
             // 
             // YADI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(675, 469);
+            this.ClientSize = new System.Drawing.Size(675, 546);
+            this.Controls.Add(this.x64RadioButton);
+            this.Controls.Add(this.x86RadioButton);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.ProcessListView);
             this.Controls.Add(this.injectionMethComboBox);
@@ -225,6 +253,7 @@ namespace YADI
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.MaximizeBox = false;
             this.Name = "YADI";
+            this.Text = "YaDi";
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
@@ -254,6 +283,8 @@ namespace YADI
         private System.Windows.Forms.ComboBox injectionMethComboBox;
         private System.Windows.Forms.ListView ProcessListView;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.RadioButton x86RadioButton;
+        private System.Windows.Forms.RadioButton x64RadioButton;
     }
 }
 

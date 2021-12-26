@@ -57,7 +57,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Castle.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
-      <HintPath>packages\Castle.Core.4.4.0\lib\net45\Castle.Core.dll</HintPath>
+      <HintPath>packages\Castle.Core.4.4.1\lib\net45\Castle.Core.dll</HintPath>
     </Reference>
     <Reference Include="Json.Net, Version=1.0.33.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Json.Net.1.0.33\lib\netstandard2.0\Json.Net.dll</HintPath>
@@ -71,8 +71,8 @@
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>packages\System.Runtime.CompilerServices.Unsafe.4.5.3\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Runtime.CompilerServices.Unsafe.6.0.0\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
     <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
@@ -86,6 +86,9 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="Typemock.ArrangeActAssert, Version=9.0.6.0, Culture=neutral, PublicKeyToken=3dae460033b8d8e2, processorArchitecture=MSIL">
+      <HintPath>packages\Typemock.Isolator.9.0.6\lib\net45\Typemock.ArrangeActAssert.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Enums\AllocationProtect.cs" />
@@ -100,11 +103,11 @@
     <Compile Include="Externals\User32.cs" />
     <Compile Include="Helpers\Misc.cs" />
     <Compile Include="Helpers\Process.cs" />
-    <Compile Include="Injection\QueueUserAPC.cs" />
-    <Compile Include="Injection\IATHook.cs" />
-    <Compile Include="Injection\ThreadHijack.cs" />
-    <Compile Include="Injection\LoadLibrary.cs" />
-    <Compile Include="Injection\SetWindowsHookEx.cs" />
+    <Compile Include="Injectors\QueueUserAPC.cs" />
+    <Compile Include="Injectors\IATHook.cs" />
+    <Compile Include="Injectors\ThreadHijack.cs" />
+    <Compile Include="Injectors\LoadLibrary.cs" />
+    <Compile Include="Injectors\SetWindowsHookEx.cs" />
     <Compile Include="Structs\Config.cs" />
     <Compile Include="Structs\Context64.cs" />
     <Compile Include="Structs\LvItem.cs" />

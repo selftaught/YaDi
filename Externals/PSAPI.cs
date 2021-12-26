@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace YADI.Externals
 {
-    class PSAPI
+    public class PSAPI
     {
         /**
         * MODULE_FILTER_FLAGS
@@ -49,7 +49,7 @@ namespace YADI.Externals
             uint dwFilterFlag
         );
 
-        public static List<Structs.Module> GetProcessModules(Process proc)
+        static List<Structs.Module> GetProcessModules(Process proc)
         {
             List<Structs.Module> modules = new List<Structs.Module>();
             IntPtr[] modPtrs = new IntPtr[0];
