@@ -48,7 +48,7 @@ namespace YADI.Injection
             }
 
             int pSuspendedThreadStatus = Kernel32.SuspendThread(pOpenThread);
-
+                
             if (pSuspendedThreadStatus == -1)
             {
 #if DEBUG
