@@ -95,6 +95,9 @@ namespace YADI.Helpers
                     }
                 }
 
+
+                //IntPtr hMapObject = Externals.Kernel32.CreateFileMapping();
+
                 Console.WriteLine("ImageSize:  " + module.ImageSize.ToString());
                 Console.WriteLine("BaseAddr:   " + module.BaseAddr.ToString());
                 Console.WriteLine("EntryPoint: " + module.EntryPoint.ToString());

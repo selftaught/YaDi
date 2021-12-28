@@ -196,6 +196,20 @@ namespace YADI.Externals
          */
         [DllImport("kernel32.dll", SetLastError = true, CallingConvention = CallingConvention.Winapi)]
         [return: MarshalAs(UnmanagedType.Bool)]
-        private static extern bool IsWow64Process([In] IntPtr process, [Out] out bool wow64Process);
+        public static extern bool IsWow64Process([In] IntPtr process, [Out] out bool wow64Process);
+
+        /**
+         * MapViewOfFile
+         * https://docs.microsoft.com/en-us/windows/win32/api/memoryapi/nf-memoryapi-mapviewoffile
+         */
+        [DllImport("kernel32.dll", SetLastError = true)]
+        public static extern IntPtr MapViewOfFile(IntPtr hFileMappingObject, Enums.FileMapAccess dwDesiredAccess, UInt32 dwFileOffsetHigh, UInt32 dwFileOffsetLow, UIntPtr dwNumberOfBytesToMap);
+
+        /**
+         * CreateFileMapping
+         * https://docs.microsoft.com/en-us/windows/win32/api/winbase/nf-winbase-createfilemappinga
+         */
+        [DllImport("kernel32.dll", SetLastError = true)]
+        public static extern IntPtr CreateFileMapping(IntPtr hFile, IntPtr lpFileMappingAttributes, Enums.AllocationProtect flProtect, uint dwMaximumSizeHigh, uint dwMaximumSizeLow, string lpName);
     }
 }
