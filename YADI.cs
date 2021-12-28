@@ -117,7 +117,7 @@ namespace YADI
         {
             /**
              * Disable the x64 radio button if we detect
-             * that we're running as 32 bit / x86.
+             * that we're running as 32 bit.
              */
             if (!Environment.Is64BitProcess)
             {
@@ -281,6 +281,8 @@ namespace YADI
                 if (Int32.TryParse(item.Text, out int pid))
                 {
                     selectedProcessID = pid;
+                    Helpers.PortableExecParser pep = new Helpers.PortableExecParser(pid);
+                    pep.Parse();
                     InjectButton_TryEnable();
                     return;
                 }

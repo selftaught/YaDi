@@ -27,67 +27,21 @@ namespace YADI.Externals
         * https://docs.microsoft.com/en-us/windows/win32/api/psapi/nf-psapi-getmodulefilenameexa
         */
         [DllImport("psapi.dll")]
-        private static extern uint GetModuleFileNameEx(IntPtr hProcess, IntPtr hModule, [Out] StringBuilder lpBaseName, uint nSize);
+        public static extern uint GetModuleFileNameEx(IntPtr hProcess, IntPtr hModule, [Out] StringBuilder lpBaseName, uint nSize);
 
         /**
          * GetModuleInformation
          * https://docs.microsoft.com/en-us/windows/win32/api/psapi/nf-psapi-getmoduleinformation
          */
         [DllImport("psapi.dll")]
-        private static extern bool GetModuleInformation(IntPtr hProcess, IntPtr hModule, out Structs.ModuleInformation lpModInfo, uint cb);
+        public static extern bool GetModuleInformation(IntPtr hProcess, IntPtr hModule, out Structs.ModuleInformation lpModInfo, uint cb);
 
         /**
          * EnumProcessModulesEx
          * https://docs.microsoft.com/en-us/windows/win32/api/psapi/nf-psapi-enumprocessmodulesex
          */
         [DllImport("psapi.dll")]
-        public static extern bool EnumProcessModulesEx(
-            IntPtr hProcess,
-            IntPtr[] lphModule,
-            int cb,
-            out int lpcbNeeded,
-            uint dwFilterFlag
-        );
+        public static extern bool EnumProcessModulesEx(IntPtr hProcess, IntPtr[] lphModule, int cb, out int lpcbNeeded, uint dwFilterFlag);
 
-        static List<Structs.Module> GetProcessModules(Process proc)
-        {
-            List<Structs.Module> modules = new List<Structs.Module>();
-            IntPtr[] modPtrs = new IntPtr[0];
-            int modCount;
-            int bytesNeeded;
-
-            if (!EnumProcessModulesEx(proc.Handle, modPtrs, 0, out bytesNeeded, (uint)MODULE_FILTER_FLAGS.LIST_MODULES_ALL))
-            {
-                MessageBox.Show("Couldn't EnumProcessModulesEx...");
-                return modules;
-            }
-
-            if (bytesNeeded == 0)
-            {
-                MessageBox.Show("Bytes needed for module list returned 0...");
-                return modules;
-            }
-
-            modCount = bytesNeeded / IntPtr.Size;
-            modPtrs = new IntPtr[modCount];
-
-            if (EnumProcessModulesEx(proc.Handle, modPtrs, bytesNeeded, out bytesNeeded, (uint)MODULE_FILTER_FLAGS.LIST_MODULES_ALL))
-            {
-                for (int i = 0; i < modCount; i++)
-                {
-                    StringBuilder modPathStringBuilder = new StringBuilder(50000);
-                    Structs.ModuleInformation modInfo = new Structs.ModuleInformation();
-                    int modInfoStructSize = System.Runtime.InteropServices.Marshal.SizeOf(typeof(Structs.ModuleInformation));
-                    GetModuleFileNameEx(proc.Handle, modPtrs[i], modPathStringBuilder, (uint)(modPathStringBuilder.Capacity));
-                    GetModuleInformation(proc.Handle, modPtrs[i], out modInfo, (uint)modInfoStructSize);
-
-                    String modPath = modPathStringBuilder.ToString();
-                    Structs.Module mod = new Structs.Module(modPath, modInfo.BaseAddr, modInfo.ImageSize, modInfo.EntryPoint);
-                    modules.Add(mod);
-                }
-            }
-
-            return modules;
-        }
     }
 }

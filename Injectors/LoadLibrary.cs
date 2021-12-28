@@ -30,12 +30,6 @@ namespace YADI.Injection
                 return false;
             }
 
-            Process proc = Process.GetProcessById(this.pid);
-
-#if DEBUG
-            Console.WriteLine("Process base address: " + proc.MainModule.BaseAddress.ToString("x8"));
-#endif
-
             IntPtr procHandle = Kernel32.OpenProcess(
                 Kernel32.PROCESS_CREATE_THREAD |
                 Kernel32.PROCESS_QUERY_INFORMATION |

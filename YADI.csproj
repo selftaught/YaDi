@@ -93,14 +93,20 @@
   <ItemGroup>
     <Compile Include="Enums\AllocationProtect.cs" />
     <Compile Include="Enums\ContextFlags.cs" />
+    <Compile Include="Enums\DataSectionFlags.cs" />
+    <Compile Include="Enums\DllCharacteristicType.cs" />
     <Compile Include="Enums\InjectionMethod.cs" />
+    <Compile Include="Enums\MachineType.cs" />
+    <Compile Include="Enums\MagicType.cs" />
     <Compile Include="Enums\ProcessAccess.cs" />
     <Compile Include="Enums\State.cs" />
+    <Compile Include="Enums\SubSystemType.cs" />
     <Compile Include="Enums\ThreadAccess.cs" />
     <Compile Include="Enums\Type.cs" />
     <Compile Include="Externals\Kernel32.cs" />
     <Compile Include="Externals\PSAPI.cs" />
     <Compile Include="Externals\User32.cs" />
+    <Compile Include="Helpers\HexDump.cs" />
     <Compile Include="Helpers\Misc.cs" />
     <Compile Include="Helpers\PortableExecParser.cs" />
     <Compile Include="Helpers\Process.cs" />
@@ -111,8 +117,12 @@
     <Compile Include="Injectors\SetWindowsHookEx.cs" />
     <Compile Include="Structs\Config.cs" />
     <Compile Include="Structs\Context64.cs" />
+    <Compile Include="Structs\ImageDataDirectory.cs" />
     <Compile Include="Structs\ImageDosHeader.cs" />
     <Compile Include="Structs\ImageFileHeader.cs" />
+    <Compile Include="Structs\ImageOptionalHeader32.cs" />
+    <Compile Include="Structs\ImageOptionalHeader64.cs" />
+    <Compile Include="Structs\ImageSectionHeader.cs" />
     <Compile Include="Structs\LvItem.cs" />
     <Compile Include="Structs\M128A.cs" />
     <Compile Include="Structs\MemBasicInfo.cs" />
