@@ -211,5 +211,47 @@ namespace YADI.Externals
          */
         [DllImport("kernel32.dll", SetLastError = true)]
         public static extern IntPtr CreateFileMapping(IntPtr hFile, IntPtr lpFileMappingAttributes, Enums.AllocationProtect flProtect, uint dwMaximumSizeHigh, uint dwMaximumSizeLow, string lpName);
+
+        /**
+         * CreateFile
+         * https://docs.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-createfile
+         */
+        [DllImport("kernel32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        public static extern IntPtr CreateFile(
+         [MarshalAs(UnmanagedType.LPTStr)] string filename,
+         [MarshalAs(UnmanagedType.U4)] Enums.EFileAccess access,
+         [MarshalAs(UnmanagedType.U4)] Enums.EFileShare share,
+         IntPtr securityAttributes, // optional SECURITY_ATTRIBUTES struct or IntPtr.Zero
+         [MarshalAs(UnmanagedType.U4)] Enums.ECreationDisposition creationDisposition,
+         [MarshalAs(UnmanagedType.U4)] Enums.EFileAttributes flagsAndAttributes,
+         IntPtr templateFile);
+
+        /**
+         * CreateFileA
+         * https://docs.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-createfilea
+         */
+        [DllImport("kernel32.dll", CharSet = CharSet.Ansi, SetLastError = true)]
+        public static extern IntPtr CreateFileA(
+             [MarshalAs(UnmanagedType.LPStr)] string filename,
+             [MarshalAs(UnmanagedType.U4)] Enums.EFileAccess access,
+             [MarshalAs(UnmanagedType.U4)] Enums.EFileShare share,
+             IntPtr securityAttributes,
+             [MarshalAs(UnmanagedType.U4)] Enums.ECreationDisposition creationDisposition,
+             [MarshalAs(UnmanagedType.U4)] Enums.EFileAttributes flagsAndAttributes,
+             IntPtr templateFile);
+        /**
+         * CreateFileW
+         * https://docs.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-createfilew
+         */
+        [DllImport("kernel32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
+        public static extern IntPtr CreateFileW(
+             [MarshalAs(UnmanagedType.LPWStr)] string filename,
+             [MarshalAs(UnmanagedType.U4)] Enums.EFileAccess access,
+             [MarshalAs(UnmanagedType.U4)] Enums.EFileShare share,
+             IntPtr securityAttributes,
+             [MarshalAs(UnmanagedType.U4)] Enums.ECreationDisposition creationDisposition,
+             [MarshalAs(UnmanagedType.U4)] Enums.EFileAttributes flagsAndAttributes,
+             IntPtr templateFile);
+
     }
 }

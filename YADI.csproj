@@ -95,6 +95,7 @@
     <Compile Include="Enums\ContextFlags.cs" />
     <Compile Include="Enums\DataSectionFlags.cs" />
     <Compile Include="Enums\DllCharacteristicType.cs" />
+    <Compile Include="Enums\FileMapAccess.cs" />
     <Compile Include="Enums\InjectionMethod.cs" />
     <Compile Include="Enums\MachineType.cs" />
     <Compile Include="Enums\MagicType.cs" />
