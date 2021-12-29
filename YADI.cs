@@ -89,6 +89,16 @@ namespace YADI
                             methodStr = "Thread Hijack";
                             break;
                         }
+                    case (ushort)InjectionMethod.QueueUserAPC:
+                        {
+                            methodStr = "QueueUserAPC";
+                            break;
+                        }
+                    case (ushort)InjectionMethod.IATHook:
+                        {
+                            methodStr = "IATHook";
+                            break;
+                        }
                 }
             }
 
@@ -115,13 +125,14 @@ namespace YADI
 
         InjectionMethod injectMethodStrToEnum(String methodStr)
         {
+            InjectionMethod method = InjectionMethod.Undef;
+
             if (methodStr.Contains("SetWindowsHook")) { return InjectionMethod.SetWindowsHook; }
             if (methodStr.Contains("Thread Hijack"))  { return InjectionMethod.ThreadHijack;   }
             if (methodStr.Contains("QueueUserAPC"))   { return InjectionMethod.QueueUserAPC;   }
-            if (methodStr.Contains("IAT"))            { return InjectionMethod.ThreadHijack;   }
+            if (methodStr.Contains("IAT"))            { return InjectionMethod.IATHook;        }
 
-            // LoadLibrary is default
-            return InjectionMethod.LoadLibrary;
+            return method;
         }
 
         private void Browse_Click(object sender, EventArgs e)
@@ -143,34 +154,18 @@ namespace YADI
         {
             if (selectedProcessID > 0 && DllPathText.Text.Length > 0)
             {
+                Injectors.Base injector = new Injectors.Base();
+
                 switch(this.selectedInjectMeth)
                 {
-                    case InjectionMethod.LoadLibrary:
-                    {
-                        (new LoadLibrary(selectedProcessID)).Inject(DllPathText.Text);
-                        break;
-                    }
-                    case InjectionMethod.SetWindowsHook:
-                    {
-                        (new SetWindowsHookEx(selectedProcessID)).Inject(DllPathText.Text);
-                        break;
-                    }
-                    case InjectionMethod.ThreadHijack:
-                    {
-                        (new ThreadHijack(selectedProcessID)).Inject(DllPathText.Text);
-                        break;
-                    }
-                    case InjectionMethod.IATHook:
-                    {
-                        (new IATHook(selectedProcessID)).Inject(DllPathText.Text);
-                        break;
-                    }
-                    case InjectionMethod.QueueUserAPC:
-                    {
-                        (new QueueUserAPC(selectedProcessID)).Inject(DllPathText.Text);
-                        break;
-                    }
+                    case InjectionMethod.LoadLibrary:    { injector = new LoadLibrary(selectedProcessID); break; }
+                    case InjectionMethod.SetWindowsHook: { injector = new SetWindowsHookEx(selectedProcessID); break; }
+                    case InjectionMethod.ThreadHijack:   { injector = new ThreadHijack(selectedProcessID); break; }
+                    case InjectionMethod.IATHook:        { injector = new IATHook(selectedProcessID); break; }
+                    case InjectionMethod.QueueUserAPC:   { injector = new QueueUserAPC(selectedProcessID); break; }
                 }
+
+                injector.Inject(DllPathText.Text);
             }
         }
 

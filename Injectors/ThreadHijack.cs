@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.IO;
 using System.Windows.Forms;
 
@@ -12,7 +7,7 @@ using YADI.Externals;
 
 namespace YADI.Injection
 {
-    class ThreadHijack 
+    class ThreadHijack : Injectors.Base
     {
         private int pid;
 
@@ -133,7 +128,7 @@ namespace YADI.Injection
 #endif
 
             Kernel32.ResumeThread(pOpenThread);
-            Kernel32.CloseHandle (pOpenThread);
+            Kernel32.CloseHandle(pOpenThread);
 
             return true;
         }

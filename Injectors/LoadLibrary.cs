@@ -1,28 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using System.Diagnostics;
-using System.Runtime.InteropServices;
-using System.Runtime.ConstrainedExecution;
-
-using YADI.Injection;
 using YADI.Externals;
 
 using System.Windows.Forms;
-using System.Collections;
 
 namespace YADI.Injection
 {
-    public class LoadLibrary
+    public class LoadLibrary : Injectors.Base
     {
         private int pid;
         public LoadLibrary(int pid)
         {
             this.pid = pid;
         }
-        public bool Inject(String dllPath)
+
+        public override bool Inject(String dllPath)
         {
             if (this.pid < 0)
             {

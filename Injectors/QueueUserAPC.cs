@@ -1,17 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using YADI.Externals;
 
 
 namespace YADI.Injection
 {
-    class QueueUserAPC
+    class QueueUserAPC : Injectors.Base
     {
         private int pid;
 

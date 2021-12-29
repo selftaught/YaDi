@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.ComponentModel;
 using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+
 using static YADI.Externals.PSAPI;
 
 namespace YADI.Helpers
@@ -35,8 +34,10 @@ namespace YADI.Helpers
 
             bool bIsWow64ProcessRet = Externals.Kernel32.IsWow64Process(process.SafeHandle.DangerousGetHandle(), out bIsWow64Process);
 
-            Console.WriteLine("bIsWow64ProcessRet: " + bIsWow64ProcessRet.ToString());
-            Console.WriteLine("bIsWow64Process: " + bIsWow64Process.ToString());
+            if (!bIsWow64ProcessRet)
+            {
+                throw new Win32Exception();
+            }
 
             return bIsWow64Process;
         }

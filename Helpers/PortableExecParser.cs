@@ -118,7 +118,7 @@ namespace YADI.Helpers
                 if (module != null && File.Exists(module.Path))
                 {
                     IntPtr hMapObject = IntPtr.Zero;
-                    IntPtr lpBase = IntPtr.Zero;
+                    IntPtr hFileMapView = IntPtr.Zero;
 
                     Structs.IMAGE_DOS_HEADER sImageDosHeader;
                     Structs.IMAGE_NT_HEADERS32 sImageNtHeaders;
@@ -126,16 +126,16 @@ namespace YADI.Helpers
                     using (FileStream fs = File.OpenRead(module.Path))
                     {
                         hMapObject = Externals.Kernel32.CreateFileMapping(fs.SafeFileHandle.DangerousGetHandle(), IntPtr.Zero, Enums.AllocationProtect.PAGE_READONLY, 0, 0, null);
-                        lpBase = Externals.Kernel32.MapViewOfFile(hMapObject, Enums.FileMapAccess.FileMapRead, 0, 0, UIntPtr.Zero);
-                        sImageDosHeader = (Structs.IMAGE_DOS_HEADER)Marshal.PtrToStructure(lpBase, typeof(Structs.IMAGE_DOS_HEADER));
+                        hFileMapView = Externals.Kernel32.MapViewOfFile(hMapObject, Enums.FileMapAccess.FileMapRead, 0, 0, UIntPtr.Zero);
+                        sImageDosHeader = (Structs.IMAGE_DOS_HEADER)Marshal.PtrToStructure(hFileMapView, typeof(Structs.IMAGE_DOS_HEADER));
 
-                        if (sImageDosHeader.e_magic[0] == 0x5A && sImageDosHeader.e_magic[1] == 0x4D)
+                        if (sImageDosHeader.e_magic[0] != 0x5A ||
+                            sImageDosHeader.e_magic[1] != 0x4D)
                         {
-                            Console.WriteLine("e_magic == 0x5A4D");
+                            throw new Exception(module.Path + " is not a valid PE file!");
                         }
 
-                        Console.WriteLine("sImageDosHeader.e_magic[0] = " + sImageDosHeader.e_magic[0]);
-                        Console.WriteLine("sImageDosHeader.e_magic[1] = " + sImageDosHeader.e_magic[1]);
+                        Console.WriteLine("Pages in file: " + sImageDosHeader.e_cp);
                     }
 
                     Console.WriteLine("ImageSize:  " + module.ImageSize.ToString());

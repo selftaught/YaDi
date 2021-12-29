@@ -111,6 +111,7 @@
     <Compile Include="Helpers\Misc.cs" />
     <Compile Include="Helpers\PortableExecParser.cs" />
     <Compile Include="Helpers\Process.cs" />
+    <Compile Include="Injectors\Base.cs" />
     <Compile Include="Injectors\QueueUserAPC.cs" />
     <Compile Include="Injectors\IATHook.cs" />
     <Compile Include="Injectors\ThreadHijack.cs" />
