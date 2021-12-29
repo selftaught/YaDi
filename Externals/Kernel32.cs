@@ -215,7 +215,7 @@ namespace YADI.Externals
         /**
          * CreateFile
          * https://docs.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-createfile
-         */
+         *
         [DllImport("kernel32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         public static extern IntPtr CreateFile(
          [MarshalAs(UnmanagedType.LPTStr)] string filename,
@@ -226,10 +226,6 @@ namespace YADI.Externals
          [MarshalAs(UnmanagedType.U4)] Enums.EFileAttributes flagsAndAttributes,
          IntPtr templateFile);
 
-        /**
-         * CreateFileA
-         * https://docs.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-createfilea
-         */
         [DllImport("kernel32.dll", CharSet = CharSet.Ansi, SetLastError = true)]
         public static extern IntPtr CreateFileA(
              [MarshalAs(UnmanagedType.LPStr)] string filename,
@@ -239,10 +235,7 @@ namespace YADI.Externals
              [MarshalAs(UnmanagedType.U4)] Enums.ECreationDisposition creationDisposition,
              [MarshalAs(UnmanagedType.U4)] Enums.EFileAttributes flagsAndAttributes,
              IntPtr templateFile);
-        /**
-         * CreateFileW
-         * https://docs.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-createfilew
-         */
+
         [DllImport("kernel32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
         public static extern IntPtr CreateFileW(
              [MarshalAs(UnmanagedType.LPWStr)] string filename,
@@ -252,6 +245,6 @@ namespace YADI.Externals
              [MarshalAs(UnmanagedType.U4)] Enums.ECreationDisposition creationDisposition,
              [MarshalAs(UnmanagedType.U4)] Enums.EFileAttributes flagsAndAttributes,
              IntPtr templateFile);
-
+        */
     }
 }

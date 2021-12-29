@@ -2,6 +2,7 @@
 using System.IO;
 using System.Diagnostics;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 
 
 // https://pastebin.com/LYgVEd5u
@@ -95,8 +96,29 @@ namespace YADI.Helpers
                     }
                 }
 
+                if (File.Exists(module.Path))
+                {
+                    IntPtr hMapObject = IntPtr.Zero;
+                    IntPtr lpBase = IntPtr.Zero;
 
-                //IntPtr hMapObject = Externals.Kernel32.CreateFileMapping();
+                    Structs.IMAGE_DOS_HEADER sImageDosHeader;
+                    Structs.IMAGE_NT_HEADERS32 sImageNtHeaders;
+
+                    using (FileStream fs = File.OpenRead(module.Path))
+                    {
+                        hMapObject = Externals.Kernel32.CreateFileMapping(fs.SafeFileHandle.DangerousGetHandle(), IntPtr.Zero, Enums.AllocationProtect.PAGE_READONLY, 0, 0, null);
+                        lpBase = Externals.Kernel32.MapViewOfFile(hMapObject, Enums.FileMapAccess.FileMapRead, 0, 0, UIntPtr.Zero);
+                        sImageDosHeader = (Structs.IMAGE_DOS_HEADER)Marshal.PtrToStructure(lpBase, typeof(Structs.IMAGE_DOS_HEADER));
+
+                        if (sImageDosHeader.e_magic[0] == 0x5A && sImageDosHeader.e_magic[1] == 0x4D)
+                        {
+                            Console.WriteLine("e_magic == 0x5A4D");
+                        }
+
+                        Console.WriteLine("sImageDosHeader.e_magic[0] = " + sImageDosHeader.e_magic[0]);
+                        Console.WriteLine("sImageDosHeader.e_magic[1] = " + sImageDosHeader.e_magic[1]);
+                    }
+                }
 
                 Console.WriteLine("ImageSize:  " + module.ImageSize.ToString());
                 Console.WriteLine("BaseAddr:   " + module.BaseAddr.ToString());

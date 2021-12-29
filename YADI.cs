@@ -115,10 +115,6 @@ namespace YADI
 
         private void InitializeArchitectureRadioButtons()
         {
-            /**
-             * Disable the x64 radio button if we detect
-             * that we're running as 32 bit.
-             */
             if (!Environment.Is64BitProcess)
             {
                 x64RadioButton.Enabled = false;

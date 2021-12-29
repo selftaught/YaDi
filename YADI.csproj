@@ -121,6 +121,8 @@
     <Compile Include="Structs\ImageDataDirectory.cs" />
     <Compile Include="Structs\ImageDosHeader.cs" />
     <Compile Include="Structs\ImageFileHeader.cs" />
+    <Compile Include="Structs\ImageNtHeader32.cs" />
+    <Compile Include="Structs\ImageNtHeader64.cs" />
     <Compile Include="Structs\ImageOptionalHeader32.cs" />
     <Compile Include="Structs\ImageOptionalHeader64.cs" />
     <Compile Include="Structs\ImageSectionHeader.cs" />
