@@ -169,7 +169,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\icon.ico" />
-    <Content Include="TextFile1.txt" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
