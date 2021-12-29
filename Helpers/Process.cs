@@ -33,10 +33,10 @@ namespace YADI.Helpers
                 return false;
             }
 
-
             bool bIsWow64ProcessRet = Externals.Kernel32.IsWow64Process(process.SafeHandle.DangerousGetHandle(), out bIsWow64Process);
 
-            Console.WriteLine(bIsWow64ProcessRet);
+            Console.WriteLine("bIsWow64ProcessRet: " + bIsWow64ProcessRet.ToString());
+            Console.WriteLine("bIsWow64Process: " + bIsWow64Process.ToString());
 
             return bIsWow64Process;
         }

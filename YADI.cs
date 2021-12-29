@@ -51,7 +51,6 @@ namespace YADI
             ProcessListView.Columns.Add("Name", 150);
             ProcessListView.Columns.Add("Title", 80);
             ProcessListView.Columns.Add("Path", 150);
-            ProcessListView.Columns.Add("Arch", 50);
 
             PopulateProcessListView(String.Empty);
         }
@@ -70,14 +69,12 @@ namespace YADI
                 }
 
                 String sProcFilename = Helpers.Process.GetFilename(process);
-                String archStr = (Helpers.Process.IsWow64Process(process) ? "x64" : "x86");
 
                 ListViewItem lvi = new ListViewItem(process.Id.ToString());
 
                 lvi.SubItems.Add(process.ProcessName);
                 lvi.SubItems.Add(process.MainWindowTitle);
                 lvi.SubItems.Add(sProcFilename);
-                lvi.SubItems.Add(archStr);
 
                 ProcessListView.Items.Add(lvi);
             }
