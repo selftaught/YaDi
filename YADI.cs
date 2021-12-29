@@ -127,10 +127,11 @@ namespace YADI
         {
             InjectionMethod method = InjectionMethod.Undef;
 
+            if (methodStr.Contains("IAT"))            { return InjectionMethod.IATHook; }
             if (methodStr.Contains("SetWindowsHook")) { return InjectionMethod.SetWindowsHook; }
-            if (methodStr.Contains("Thread Hijack"))  { return InjectionMethod.ThreadHijack;   }
-            if (methodStr.Contains("QueueUserAPC"))   { return InjectionMethod.QueueUserAPC;   }
-            if (methodStr.Contains("IAT"))            { return InjectionMethod.IATHook;        }
+            if (methodStr.Contains("Thread Hijack"))  { return InjectionMethod.ThreadHijack; }
+            if (methodStr.Contains("QueueUserAPC"))   { return InjectionMethod.QueueUserAPC; }
+            if (methodStr.Contains("LoadLibrary"))    { return InjectionMethod.LoadLibrary; }
 
             return method;
         }
@@ -138,6 +139,7 @@ namespace YADI
         private void Browse_Click(object sender, EventArgs e)
         {
             OpenFileDialog fdlg = new OpenFileDialog();
+
             fdlg.Title = "YADI DLL Injector - Browse DLLs";
             fdlg.InitialDirectory = @Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
             fdlg.Filter = "All files (*.*)|*.*|Dll files (*.dll)|*.dll";
@@ -264,8 +266,17 @@ namespace YADI
                 if (Int32.TryParse(item.Text, out int pid))
                 {
                     selectedProcessID = pid;
-                    Helpers.PortableExecParser pep = new Helpers.PortableExecParser(pid);
-                    pep.Parse();
+
+                    try
+                    {
+                        Helpers.PortableExecParser pep = new Helpers.PortableExecParser(pid);
+                        pep.Parse();
+                    }
+                    catch
+                    {
+
+                    }
+
                     InjectButton_TryEnable();
                     return;
                 }

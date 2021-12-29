@@ -129,9 +129,12 @@ namespace YADI.Helpers
                         hFileMapView = Externals.Kernel32.MapViewOfFile(hMapObject, Enums.FileMapAccess.FileMapRead, 0, 0, UIntPtr.Zero);
                         sImageDosHeader = (Structs.IMAGE_DOS_HEADER)Marshal.PtrToStructure(hFileMapView, typeof(Structs.IMAGE_DOS_HEADER));
 
-                        if (sImageDosHeader.e_magic[0] != 0x5A ||
-                            sImageDosHeader.e_magic[1] != 0x4D)
+                        if (sImageDosHeader.e_magic[0] != 0x4D ||
+                            sImageDosHeader.e_magic[1] != 0x5A)
                         {
+                            Console.WriteLine("e_magic[0] = " + sImageDosHeader.e_magic[0]);
+                            Console.WriteLine("e_magic[1] = " + sImageDosHeader.e_magic[1]);
+
                             throw new Exception(module.Path + " is not a valid PE file!");
                         }
 
