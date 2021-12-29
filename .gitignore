@@ -11,3 +11,7 @@ TestDLL
 x64
 x32
 packages
+*.htm
+*.html
+Debug
+Release
