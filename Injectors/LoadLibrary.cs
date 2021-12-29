@@ -38,6 +38,8 @@ namespace YADI.Injection
                 Kernel32.PROCESS_VM_READ,
                 false, (uint)this.pid);
 
+            IntPtr LoadLibraryAddr = Kernel32.GetProcAddress(Kernel32.GetModuleHandle("kernel32.dll"), "LoadLibraryA");
+
             if (procHandle == null)
             {
                 MessageBox.Show("Couldn't get process handle...");
@@ -78,7 +80,6 @@ namespace YADI.Injection
 #if DEBUG
             Console.WriteLine("Successfully wrote " + bytesWritten.ToUInt32() + " to process memory");
 
-
             bool bReadMemory = Kernel32.ReadProcessMemory(procHandle, dllPathBaseAddr, buffer, buffer.Length, out bytesRead);
 
             if (bReadMemory)
@@ -88,16 +89,12 @@ namespace YADI.Injection
             }
 #endif
 
-            IntPtr Kernel32Handle = Kernel32.GetModuleHandle("kernel32.dll");
-            IntPtr LoadLibraryAddr = Kernel32.GetProcAddress(Kernel32Handle, "LoadLibraryA");
             IntPtr RemoteThread = Kernel32.CreateRemoteThread(procHandle, IntPtr.Zero, 0, LoadLibraryAddr, dllPathBaseAddr, 0, IntPtr.Zero);
 
 #if DEBUG
-            String Kernel32HandleHexStr = "0x" + Kernel32Handle.ToString("x8");
             String LoadLibraryAddrHexStr = "0x" + LoadLibraryAddr.ToString("x8");
             String RemoteThreadHexStr = "0x" + RemoteThread.ToString("x8");
 
-            Console.WriteLine("Kernel32 handle: " + Kernel32HandleHexStr);
             Console.WriteLine("LoadLibrary address: " + LoadLibraryAddrHexStr);
             Console.WriteLine("RemoteThread address: " + RemoteThreadHexStr);
 #endif
@@ -111,13 +108,13 @@ namespace YADI.Injection
                 return false;
             }
 
-           // ulong wfso_rc = Kernel32.WaitForSingleObject(RemoteThread, Kernel32.WFSO_INFINITE);
-           // UIntPtr thread_exit_code;
-           // Kernel32.GetExitCodeThread(RemoteThread, out thread_exit_code);
+           ulong wfso_rc = Kernel32.WaitForSingleObject(RemoteThread, Kernel32.WFSO_INFINITE);
+           UIntPtr thread_exit_code;
+           Kernel32.GetExitCodeThread(RemoteThread, out thread_exit_code);
 
 #if DEBUG
-           // Console.WriteLine("WaitForSingleObject returned: " + wfso_rc);
-           // Console.WriteLine("Thread exited with code: " + thread_exit_code);
+           Console.WriteLine("WaitForSingleObject returned: " + wfso_rc);
+           Console.WriteLine("Thread exited with code: " + thread_exit_code);
 #endif
 
             if (!Kernel32.VirtualFreeEx(procHandle, dllPathBaseAddr, 0, Kernel32.MEM_RELEASE))

@@ -24,6 +24,23 @@ namespace YADI.Helpers
             return sb.ToString();
         }
 
+        public static bool IsWow64Process(System.Diagnostics.Process process)
+        {
+            bool bIsWow64Process = true;
+
+            if (!Environment.Is64BitOperatingSystem)
+            {
+                return false;
+            }
+
+
+            bool bIsWow64ProcessRet = Externals.Kernel32.IsWow64Process(process.SafeHandle.DangerousGetHandle(), out bIsWow64Process);
+
+            Console.WriteLine(bIsWow64ProcessRet);
+
+            return bIsWow64Process;
+        }
+
         public static List<Structs.Module> GetProcessModules(int PID)
         {
             return GetProcessModules(System.Diagnostics.Process.GetProcessById(PID));

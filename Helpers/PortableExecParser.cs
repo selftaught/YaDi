@@ -3,6 +3,7 @@ using System.IO;
 using System.Diagnostics;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using System.Windows.Forms;
 
 
 // https://pastebin.com/LYgVEd5u
@@ -73,7 +74,8 @@ namespace YADI.Helpers
 
                 if (hProc == IntPtr.Zero)
                 {
-                    throw new Exception("Couldn't OpenProcess (PID: " + Pid + ")");
+                    Console.WriteLine("Couldn't OpenProcess (PID: " + Pid + ")");
+                    return;
                 }
 
                 List<Structs.Module> modules = Helpers.Process.GetProcessModules(Pid);
@@ -82,21 +84,38 @@ namespace YADI.Helpers
                 System.Diagnostics.Process p = System.Diagnostics.Process.GetProcessById(Pid);
                 String procFilename = Helpers.Process.GetFilename(p);
 
-                if (procFilename != null)
+                if (procFilename == null || procFilename == String.Empty)
                 {
-                    Console.WriteLine(procFilename);
+                    MessageBox.Show("Couldn't get filename of process (ID: " + Pid + ")!", "Error");
+                    return;
+                }
+                else
+                {
+                    Console.WriteLine("Searching for '" + procFilename + "' in module list...");
                 }
 
+                uint index = 0;
                 foreach (Structs.Module m in modules)
                 {
-                    if (m.Path == procFilename)
+#if DEBUG
+                    Console.WriteLine("module[" + index + "].Path = " + m.Path);
+#endif
+                    if (m.Path == procFilename || m.Path.IndexOf(procFilename, StringComparison.OrdinalIgnoreCase) >= 0)
                     {
                         module = m;
                         break;
                     }
+
+                    index++;
                 }
 
-                if (File.Exists(module.Path))
+                if (module == null)
+                {
+                    MessageBox.Show("Couldn't find process' MainModule!", "ERROR");
+                    return;
+                }
+
+                if (module != null && File.Exists(module.Path))
                 {
                     IntPtr hMapObject = IntPtr.Zero;
                     IntPtr lpBase = IntPtr.Zero;
@@ -118,11 +137,11 @@ namespace YADI.Helpers
                         Console.WriteLine("sImageDosHeader.e_magic[0] = " + sImageDosHeader.e_magic[0]);
                         Console.WriteLine("sImageDosHeader.e_magic[1] = " + sImageDosHeader.e_magic[1]);
                     }
-                }
 
-                Console.WriteLine("ImageSize:  " + module.ImageSize.ToString());
-                Console.WriteLine("BaseAddr:   " + module.BaseAddr.ToString());
-                Console.WriteLine("EntryPoint: " + module.EntryPoint.ToString());
+                    Console.WriteLine("ImageSize:  " + module.ImageSize.ToString());
+                    Console.WriteLine("BaseAddr:   " + module.BaseAddr.ToString());
+                    Console.WriteLine("EntryPoint: " + module.EntryPoint.ToString());
+                }
             }
         }
     }

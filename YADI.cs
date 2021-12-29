@@ -51,6 +51,7 @@ namespace YADI
             ProcessListView.Columns.Add("Name", 150);
             ProcessListView.Columns.Add("Title", 80);
             ProcessListView.Columns.Add("Path", 150);
+            ProcessListView.Columns.Add("Arch", 50);
 
             PopulateProcessListView(String.Empty);
         }
@@ -69,12 +70,14 @@ namespace YADI
                 }
 
                 String sProcFilename = Helpers.Process.GetFilename(process);
+                String archStr = (Helpers.Process.IsWow64Process(process) ? "x64" : "x86");
 
                 ListViewItem lvi = new ListViewItem(process.Id.ToString());
 
                 lvi.SubItems.Add(process.ProcessName);
                 lvi.SubItems.Add(process.MainWindowTitle);
                 lvi.SubItems.Add(sProcFilename);
+                lvi.SubItems.Add(archStr);
 
                 ProcessListView.Items.Add(lvi);
             }
@@ -124,21 +127,12 @@ namespace YADI
 
         InjectionMethod injectMethodStrToEnum(String methodStr)
         {
-            if (methodStr.Contains("SetWindowsHook"))
-            {
-                return InjectionMethod.SetWindowsHook;
-            }
-            else if (methodStr.Contains("Thread Hijack"))
-            {
-                return InjectionMethod.ThreadHijack;
-            }
-            else if (methodStr.Contains("QueueUserAPC"))
-            {
-                Console.WriteLine("QueueUserAPC");
-                return InjectionMethod.QueueUserAPC;
-            }
+            if (methodStr.Contains("SetWindowsHook")) { return InjectionMethod.SetWindowsHook; }
+            if (methodStr.Contains("Thread Hijack"))  { return InjectionMethod.ThreadHijack;   }
+            if (methodStr.Contains("QueueUserAPC"))   { return InjectionMethod.QueueUserAPC;   }
+            if (methodStr.Contains("IAT"))            { return InjectionMethod.ThreadHijack;   }
 
-            Console.WriteLine("LoadLibrary");
+            // LoadLibrary is default
             return InjectionMethod.LoadLibrary;
         }
 
@@ -265,6 +259,16 @@ namespace YADI
                         if (config != null && config.RememberLastMethod())
                         {
                             config.SetLastMethod((ushort)InjectionMethod.QueueUserAPC);
+                        }
+                        break;
+                    }
+                case InjectionMethod.IATHook:
+                    {
+                        this.selectedInjectMeth = InjectionMethod.IATHook;
+
+                        if (config != null && config.RememberLastMethod())
+                        {
+                            config.SetLastMethod((ushort)InjectionMethod.IATHook);
                         }
                         break;
                     }
