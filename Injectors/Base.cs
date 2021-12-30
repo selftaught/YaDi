@@ -6,7 +6,7 @@ namespace YADI.Injectors
     {
         public virtual bool Inject(String dllPath)
         {
-            throw new Exception("Inject method override undefined");
+            throw new Exception("Inject Method Unimplemented");
         }
     }
 }
