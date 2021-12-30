@@ -16,7 +16,7 @@ namespace YADI.Injection
             this.pid = pid;
         }
 
-        public bool Inject(String dllPath)
+        public override bool Inject(String dllPath)
         {
             Process process = Process.GetProcessById((int)this.pid);
 

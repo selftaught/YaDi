@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Text;
 using System.Windows.Forms;
+
 using YADI.Externals;
 
 
@@ -16,7 +17,7 @@ namespace YADI.Injection
             this.pid = pid;
         }
 
-        public bool Inject(String dllPath)
+        public override bool Inject(String dllPath)
         {
             IntPtr procHandle = Kernel32.OpenProcess(
                 Kernel32.PROCESS_CREATE_THREAD |
