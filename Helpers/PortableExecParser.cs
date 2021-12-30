@@ -54,7 +54,29 @@ namespace YADI.Helpers
                 throw new Exception("Path to PE undefined!");
             }
 
-            Console.WriteLine("File length: " + FileSize);
+            IntPtr hMapObject = IntPtr.Zero;
+            IntPtr hFileMapView = IntPtr.Zero;
+
+            Structs.IMAGE_DOS_HEADER sImageDosHeader;
+            Structs.IMAGE_NT_HEADERS32 sImageNtHeaders;
+
+            using (FileStream fs = File.OpenRead(FilePath))
+            {
+                hMapObject = Externals.Kernel32.CreateFileMapping(fs.SafeFileHandle.DangerousGetHandle(), IntPtr.Zero, Enums.AllocationProtect.PAGE_READONLY, 0, 0, null);
+                hFileMapView = Externals.Kernel32.MapViewOfFile(hMapObject, Enums.FileMapAccess.FileMapRead, 0, 0, UIntPtr.Zero);
+                sImageDosHeader = (Structs.IMAGE_DOS_HEADER)Marshal.PtrToStructure(hFileMapView, typeof(Structs.IMAGE_DOS_HEADER));
+
+                if (sImageDosHeader.e_magic[0] != 0x4D ||
+                    sImageDosHeader.e_magic[1] != 0x5A)
+                {
+                    Console.WriteLine("e_magic[0] = " + sImageDosHeader.e_magic[0]);
+                    Console.WriteLine("e_magic[1] = " + sImageDosHeader.e_magic[1]);
+
+                    throw new Exception(FilePath + " is not a valid PE file!");
+                }
+
+                Console.WriteLine("Pages in file: " + sImageDosHeader.e_cp);
+            }
         }
 
         private void ParseFromProcessMemory()
@@ -99,6 +121,8 @@ namespace YADI.Helpers
                 {
 #if DEBUG
                     Console.WriteLine("module[" + index + "].Path = " + m.Path);
+                    Console.WriteLine("module[" + index + "].BaseAddr = " + m.BaseAddr);
+                    Console.WriteLine("module[" + index + "].EntryPoint = " + m.EntryPoint);
 #endif
                     if (m.Path == procFilename || m.Path.IndexOf(procFilename, StringComparison.OrdinalIgnoreCase) >= 0)
                     {

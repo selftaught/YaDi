@@ -271,6 +271,10 @@ namespace YADI
                     {
                         Helpers.PortableExecParser pep = new Helpers.PortableExecParser(pid);
                         pep.Parse();
+
+                        Helpers.PortableExecParser pep2 = new Helpers.PortableExecParser("C:\\Users\\th3v0id\\source\\repos\\YADI\\Debug\\TestDLL_x86.dll");
+                        pep2.Parse();
+
                     }
                     catch
                     {
