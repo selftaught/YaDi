@@ -1,4 +1,5 @@
-﻿namespace YADI.Enums
+﻿
+namespace YADI.Enums
 {
     public enum MagicType : ushort
     {

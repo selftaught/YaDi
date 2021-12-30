@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
-
 // https://pastebin.com/LYgVEd5u
 
 namespace YADI.Helpers
