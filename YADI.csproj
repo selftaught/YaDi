@@ -102,7 +102,6 @@
     <Compile Include="Enums\ProcessAccess.cs" />
     <Compile Include="Enums\State.cs" />
     <Compile Include="Enums\SubSystemType.cs" />
-    <Compile Include="Enums\ThreadAccess.cs" />
     <Compile Include="Enums\Type.cs" />
     <Compile Include="Externals\Kernel32.cs" />
     <Compile Include="Externals\PSAPI.cs" />
