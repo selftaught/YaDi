@@ -12,7 +12,7 @@ namespace YADI.Injection
             this.pid = (uint)pid;
         }
 
-        public bool Inject(String dllPath)
+        public override bool Inject(String dllPath)
         {
 
             return true;
