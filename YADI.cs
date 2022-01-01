@@ -39,10 +39,10 @@ namespace YADI
         private void InitializeProcessListView()
         {
             ProcessListView.Columns.Add("PID", 50);
-            ProcessListView.Columns.Add("Name", 150);
+            ProcessListView.Columns.Add("Arch", 50);
+            ProcessListView.Columns.Add("Name", 100);
             ProcessListView.Columns.Add("Title", 80);
             ProcessListView.Columns.Add("Path", 150);
-            ProcessListView.Columns.Add("Platform", 50);
 
             PopulateProcessListView(String.Empty);
         }
@@ -65,14 +65,15 @@ namespace YADI
                 ListViewItem lvi = new ListViewItem(process.Id.ToString());
 
                 BinaryType bt;
+
                 Externals.Kernel32.GetBinaryType(sProcFilename, out bt);
 
-                String type = (bt == BinaryType.SCS_32BIT_BINARY ? "x86" : "x64");
+                String type = (bt == BinaryType.SCS_32BIT_BINARY ? "32" : "64");
 
+                lvi.SubItems.Add(type);
                 lvi.SubItems.Add(process.ProcessName);
                 lvi.SubItems.Add(process.MainWindowTitle);
                 lvi.SubItems.Add(sProcFilename);
-                lvi.SubItems.Add(type);
 
                 ProcessListView.Items.Add(lvi);
             }
