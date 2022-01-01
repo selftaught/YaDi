@@ -32,12 +32,17 @@ namespace YADI.Helpers
                 return false;
             }
 
-            bool bIsWow64ProcessRet = Externals.Kernel32.IsWow64Process(process.SafeHandle.DangerousGetHandle(), out bIsWow64Process);
+            IntPtr hProc = Externals.Kernel32.OpenProcess(Externals.Kernel32.PROCESS_QUERY_INFORMATION, false, (uint)process.Id);
+
+            bool bIsWow64ProcessRet = Externals.Kernel32.IsWow64Process(hProc, out bIsWow64Process);
 
             if (!bIsWow64ProcessRet)
             {
+                Externals.Kernel32.CloseHandle(hProc);
                 throw new Win32Exception();
             }
+
+            Externals.Kernel32.CloseHandle(hProc);
 
             return bIsWow64Process;
         }
@@ -51,6 +56,7 @@ namespace YADI.Helpers
         {
             List<Structs.Module> modules = new List<Structs.Module>();
             IntPtr[] modPtrs = new IntPtr[0];
+
             int modCount;
             int bytesNeeded;
 
@@ -67,22 +73,19 @@ namespace YADI.Helpers
             modCount = bytesNeeded / IntPtr.Size;
             modPtrs = new IntPtr[modCount];
 
-            if (Externals.PSAPI.EnumProcessModulesEx(proc.Handle, modPtrs, bytesNeeded, out bytesNeeded, (uint)MODULE_FILTER_FLAGS.LIST_MODULES_ALL))
+            for (int i = 0; i < modCount; i++)
             {
-                for (int i = 0; i < modCount; i++)
-                {
-                    StringBuilder modPathStringBuilder = new StringBuilder(50000);
-                    Structs.ModuleInformation modInfo = new Structs.ModuleInformation();
-                    int modInfoStructSize = System.Runtime.InteropServices.Marshal.SizeOf(typeof(Structs.ModuleInformation));
+                StringBuilder modPathStringBuilder = new StringBuilder(50000);
+                Structs.ModuleInformation modInfo = new Structs.ModuleInformation();
+                int modInfoStructSize = System.Runtime.InteropServices.Marshal.SizeOf(typeof(Structs.ModuleInformation));
 
-                    Externals.PSAPI.GetModuleFileNameEx(proc.Handle, modPtrs[i], modPathStringBuilder, (uint)(modPathStringBuilder.Capacity));
-                    Externals.PSAPI.GetModuleInformation(proc.Handle, modPtrs[i], out modInfo, (uint)modInfoStructSize);
+                Externals.PSAPI.GetModuleFileNameEx(proc.Handle, modPtrs[i], modPathStringBuilder, (uint)(modPathStringBuilder.Capacity));
+                Externals.PSAPI.GetModuleInformation(proc.Handle, modPtrs[i], out modInfo, (uint)modInfoStructSize);
 
-                    String modPath = modPathStringBuilder.ToString();
-                    Structs.Module mod = new Structs.Module(modPath, modInfo.BaseAddr, modInfo.ImageSize, modInfo.EntryPoint);
+                String modPath = modPathStringBuilder.ToString();
+                Structs.Module mod = new Structs.Module(modPath, modInfo.BaseAddr, modInfo.ImageSize, modInfo.EntryPoint);
 
-                    modules.Add(mod);
-                }
+                modules.Add(mod);
             }
 
             return modules;

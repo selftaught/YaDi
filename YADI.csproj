@@ -92,6 +92,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Enums\AllocationProtect.cs" />
+    <Compile Include="Enums\BinaryType.cs" />
     <Compile Include="Enums\ContextFlags.cs" />
     <Compile Include="Enums\DataSectionFlags.cs" />
     <Compile Include="Enums\DllCharacteristicType.cs" />

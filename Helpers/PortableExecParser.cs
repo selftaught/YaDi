@@ -18,7 +18,7 @@ namespace YADI.Helpers
         {
             Pid = -1;
             FilePath = Path;
-            FileSize = new System.IO.FileInfo(Path).Length;
+            FileSize = (File.Exists(Path) ? new System.IO.FileInfo(Path).Length : 0);
         }
 
         public PortableExecParser(int PID)
@@ -43,37 +43,57 @@ namespace YADI.Helpers
             }
         }
 
-        private void ParseFromFile()
+        public Structs.IMAGE_DOS_HEADER GetImageDosHeader(String szFilePath)
         {
-            Console.WriteLine("Parsing PE from exec file: " + FilePath);
-
-            if (FilePath.Length == 0)
+            if (szFilePath.Length == 0)
             {
                 throw new Exception("Path to PE undefined!");
             }
 
+            Structs.IMAGE_DOS_HEADER sImageDosHeader = new Structs.IMAGE_DOS_HEADER();
+
             IntPtr hMapObject = IntPtr.Zero;
             IntPtr hFileMapView = IntPtr.Zero;
 
-            Structs.IMAGE_DOS_HEADER sImageDosHeader;
-            Structs.IMAGE_NT_HEADERS32 sImageNtHeaders;
-
-            using (FileStream fs = File.OpenRead(FilePath))
+            using (FileStream fs = File.OpenRead(szFilePath))
             {
                 hMapObject = Externals.Kernel32.CreateFileMapping(fs.SafeFileHandle.DangerousGetHandle(), IntPtr.Zero, Enums.AllocationProtect.PAGE_READONLY, 0, 0, null);
                 hFileMapView = Externals.Kernel32.MapViewOfFile(hMapObject, Enums.FileMapAccess.FileMapRead, 0, 0, UIntPtr.Zero);
                 sImageDosHeader = (Structs.IMAGE_DOS_HEADER)Marshal.PtrToStructure(hFileMapView, typeof(Structs.IMAGE_DOS_HEADER));
 
-                if (sImageDosHeader.e_magic[0] != 0x4D ||
-                    sImageDosHeader.e_magic[1] != 0x5A)
+                if (sImageDosHeader.e_magic[0] != 0x4D || sImageDosHeader.e_magic[1] != 0x5A)
                 {
-                    Console.WriteLine("e_magic[0] = " + sImageDosHeader.e_magic[0]);
-                    Console.WriteLine("e_magic[1] = " + sImageDosHeader.e_magic[1]);
-
-                    throw new Exception(FilePath + " is not a valid PE file!");
+                    throw new Exception(szFilePath + " is not a valid PE file!");
                 }
+            }
 
-                Console.WriteLine("Pages in file: " + sImageDosHeader.e_cp);
+            return sImageDosHeader;
+        }
+
+        public Structs.IMAGE_NT_HEADERS32 GetImageNtHeaders32()
+        {
+            Structs.IMAGE_NT_HEADERS32 sImageNtHeaders32 = new Structs.IMAGE_NT_HEADERS32();
+
+            return sImageNtHeaders32;
+        }
+
+        public Structs.IMAGE_NT_HEADERS64 GetImageNtHeaders64()
+        {
+            Structs.IMAGE_NT_HEADERS64 sImageNtHeaders64 = new Structs.IMAGE_NT_HEADERS64();
+
+            return sImageNtHeaders64;
+        }
+
+        private void ParseFromFile()
+        {
+            if (FilePath.Length == 0)
+            {
+                throw new Exception("Path to PE undefined!");
+            }
+
+            if (!File.Exists(FilePath))
+            {
+                throw new Exception("Path to PE doesn't exist!");
             }
         }
 
@@ -107,28 +127,17 @@ namespace YADI.Helpers
                 if (procFilename == null || procFilename == String.Empty)
                 {
                     MessageBox.Show("Couldn't get filename of process (ID: " + Pid + ")!", "Error");
+                    Externals.Kernel32.CloseHandle(hProc);
                     return;
                 }
-                else
-                {
-                    Console.WriteLine("Searching for '" + procFilename + "' in module list...");
-                }
 
-                uint index = 0;
                 foreach (Structs.Module m in modules)
                 {
-#if DEBUG
-                    Console.WriteLine("module[" + index + "].Path = " + m.Path);
-                    Console.WriteLine("module[" + index + "].BaseAddr = " + m.BaseAddr);
-                    Console.WriteLine("module[" + index + "].EntryPoint = " + m.EntryPoint);
-#endif
                     if (m.Path == procFilename || m.Path.IndexOf(procFilename, StringComparison.OrdinalIgnoreCase) >= 0)
                     {
                         module = m;
                         break;
                     }
-
-                    index++;
                 }
 
                 if (module == null)
@@ -136,36 +145,28 @@ namespace YADI.Helpers
                     MessageBox.Show("Couldn't find process' MainModule!", "ERROR");
                     return;
                 }
-
-                if (module != null && File.Exists(module.Path))
+                else if (File.Exists(module.Path))
                 {
-                    IntPtr hMapObject = IntPtr.Zero;
-                    IntPtr hFileMapView = IntPtr.Zero;
+                    Structs.IMAGE_DOS_HEADER sImageDosHeader = GetImageDosHeader(module.Path);
+                    Structs.IMAGE_NT_HEADERS32 sImageNtHeaders32;
+                    Structs.IMAGE_NT_HEADERS64 sImageNtHeaders64;
 
-                    Structs.IMAGE_DOS_HEADER sImageDosHeader;
-                    Structs.IMAGE_NT_HEADERS32 sImageNtHeaders;
-
-                    using (FileStream fs = File.OpenRead(module.Path))
+                    // If the host OS isn't 64 bit, we can gaurantee
+                    // the target PE is 32 bit
+                    if (!Environment.Is64BitOperatingSystem)
                     {
-                        hMapObject = Externals.Kernel32.CreateFileMapping(fs.SafeFileHandle.DangerousGetHandle(), IntPtr.Zero, Enums.AllocationProtect.PAGE_READONLY, 0, 0, null);
-                        hFileMapView = Externals.Kernel32.MapViewOfFile(hMapObject, Enums.FileMapAccess.FileMapRead, 0, 0, UIntPtr.Zero);
-                        sImageDosHeader = (Structs.IMAGE_DOS_HEADER)Marshal.PtrToStructure(hFileMapView, typeof(Structs.IMAGE_DOS_HEADER));
-
-                        if (sImageDosHeader.e_magic[0] != 0x4D ||
-                            sImageDosHeader.e_magic[1] != 0x5A)
-                        {
-                            Console.WriteLine("e_magic[0] = " + sImageDosHeader.e_magic[0]);
-                            Console.WriteLine("e_magic[1] = " + sImageDosHeader.e_magic[1]);
-
-                            throw new Exception(module.Path + " is not a valid PE file!");
-                        }
-
-                        Console.WriteLine("Pages in file: " + sImageDosHeader.e_cp);
+                        Console.WriteLine("Getting x86 NT Headers from PE");
+                        sImageNtHeaders32 = GetImageNtHeaders32();
                     }
+                    else
+                    {
+                        // OS is 64 bit so we can't be sure if the target PE
+                        // is 32 bit or 64 bit without a call is IsWow64Process..
+                        if (Helpers.Process.IsWow64Process(p))
+                        {
 
-                    Console.WriteLine("ImageSize:  " + module.ImageSize.ToString());
-                    Console.WriteLine("BaseAddr:   " + module.BaseAddr.ToString());
-                    Console.WriteLine("EntryPoint: " + module.EntryPoint.ToString());
+                        }
+                    }
                 }
             }
         }
