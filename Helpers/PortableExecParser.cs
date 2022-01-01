@@ -124,7 +124,7 @@ namespace YADI.Helpers
                 System.Diagnostics.Process p = System.Diagnostics.Process.GetProcessById(Pid);
                 String procFilename = Helpers.Process.GetFilename(p);
 
-                if (procFilename == null || procFilename == String.Empty)
+                if (procFilename == String.Empty)
                 {
                     MessageBox.Show("Couldn't get filename of process (ID: " + Pid + ")!", "Error");
                     Externals.Kernel32.CloseHandle(hProc);

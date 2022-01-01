@@ -8,12 +8,12 @@ namespace YADI.Injection
     {
         uint pid;
 
-        public IATHook(int pid)
+        public IATHook(int nPid)
         {
-            this.pid = (uint)pid;
+            this.pid = (uint)nPid;
         }
 
-        public override bool Inject(String dllPath)
+        public override bool Inject(String szDllPath)
         {
 
             return true;

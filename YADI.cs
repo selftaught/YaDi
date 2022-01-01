@@ -25,7 +25,6 @@ namespace YADI
             InitializeDllPathInput();
             InitializeProcessListView();
             InitializeMethodComboBox();
-            //InitializeArchitectureRadioButtons();
         }
 
         private void InitializeDllPathInput()
@@ -120,17 +119,6 @@ namespace YADI
             }
         }
 
-        /*
-        private void InitializeArchitectureRadioButtons()
-        {
-            if (!Environment.Is64BitProcess)
-            {
-                x64RadioButton.Enabled = false;
-                x86RadioButton.Checked = true;
-            }
-        }
-        */
-
         InjectionMethod injectMethodStrToEnum(String methodStr)
         {
             InjectionMethod method = InjectionMethod.Undef;
@@ -148,7 +136,7 @@ namespace YADI
         {
             OpenFileDialog fdlg = new OpenFileDialog();
 
-            fdlg.Title = "YADI DLL Injector - Browse DLLs";
+            fdlg.Title = "YaDi - Select DLL";
             fdlg.InitialDirectory = @Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
             fdlg.Filter = "All files (*.*)|*.*|Dll files (*.dll)|*.dll";
             fdlg.FilterIndex = 2;
@@ -276,17 +264,11 @@ namespace YADI
                 {
                     selectedProcessID = pid;
 
-                    Enums.BinaryType bt;
-                    bool bBinaryTypeRet = Externals.Kernel32.GetBinaryType("C:\\Users\\th3v0id\\source\\repos\\YADI\\Debug\\TestDLL_x86.dll", out bt);
+                    Helpers.PortableExecParser pep = new Helpers.PortableExecParser(pid);
+                    pep.Parse();
 
-                    Console.WriteLine("bBinaryTypeRet: " + bBinaryTypeRet);
-                    Console.WriteLine("Binary type   : " + bt);
-                    //Helpers.PortableExecParser pep = new Helpers.PortableExecParser(pid);
-                    //pep.Parse();
-
-                    //Helpers.PortableExecParser pep2 = new Helpers.PortableExecParser("C:\\Users\\th3v0id\\source\\repos\\YADI\\Debug\\TestDLL_x86.dll");
-                    //pep2.Parse();
-
+                    Helpers.PortableExecParser pep2 = new Helpers.PortableExecParser("C:\\Users\\th3v0id\\source\\repos\\YADI\\Debug\\TestDLL_x86.dll");
+                    pep2.Parse();
 
                     InjectButton_TryEnable();
                     return;
