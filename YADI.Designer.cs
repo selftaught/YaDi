@@ -188,7 +188,7 @@ namespace YADI
             this.ProcessListView.Location = new System.Drawing.Point(35, 203);
             this.ProcessListView.MultiSelect = false;
             this.ProcessListView.Name = "ProcessListView";
-            this.ProcessListView.Size = new System.Drawing.Size(603, 282);
+            this.ProcessListView.Size = new System.Drawing.Size(603, 274);
             this.ProcessListView.TabIndex = 20;
             this.ProcessListView.UseCompatibleStateImageBehavior = false;
             this.ProcessListView.View = System.Windows.Forms.View.Details;
