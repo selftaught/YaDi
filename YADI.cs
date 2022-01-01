@@ -25,7 +25,7 @@ namespace YADI
             InitializeDllPathInput();
             InitializeProcessListView();
             InitializeMethodComboBox();
-            InitializeArchitectureRadioButtons();
+            //InitializeArchitectureRadioButtons();
         }
 
         private void InitializeDllPathInput()
@@ -47,32 +47,30 @@ namespace YADI
             PopulateProcessListView(String.Empty);
         }
 
-        private void PopulateProcessListView(String filter)
+        private void PopulateProcessListView(String szFilter)
         {
             ProcessListView.Items.Clear();
 
-            List<String> processStrings = new List<String>();
-
-            foreach (Process process in Process.GetProcesses())
+            foreach (Process proc in Process.GetProcesses())
             {
-                if ((filter.Length > 0 && !process.ProcessName.Contains(filter)) || (process.Id == 0))
+                if ((szFilter.Length > 0 && !proc.ProcessName.Contains(szFilter)) || (proc.Id == 0))
                 {
                     continue;
                 }
 
-                String sProcFilename = Helpers.Process.GetFilename(process);
+                String sProcFilename = Helpers.Process.GetFilename(proc);
 
-                ListViewItem lvi = new ListViewItem(process.Id.ToString());
+                ListViewItem lvi = new ListViewItem(proc.Id.ToString());
 
                 BinaryType bt;
 
                 Externals.Kernel32.GetBinaryType(sProcFilename, out bt);
 
-                String type = (bt == BinaryType.SCS_32BIT_BINARY ? "32" : "64");
+                String sArch = (bt == BinaryType.SCS_32BIT_BINARY ? "32" : (bt == BinaryType.SCS_64BIT_BINARY ? "64" : ""));
 
-                lvi.SubItems.Add(type);
-                lvi.SubItems.Add(process.ProcessName);
-                lvi.SubItems.Add(process.MainWindowTitle);
+                lvi.SubItems.Add(sArch);
+                lvi.SubItems.Add(proc.ProcessName);
+                lvi.SubItems.Add(proc.MainWindowTitle);
                 lvi.SubItems.Add(sProcFilename);
 
                 ProcessListView.Items.Add(lvi);
@@ -122,6 +120,7 @@ namespace YADI
             }
         }
 
+        /*
         private void InitializeArchitectureRadioButtons()
         {
             if (!Environment.Is64BitProcess)
@@ -130,6 +129,7 @@ namespace YADI
                 x86RadioButton.Checked = true;
             }
         }
+        */
 
         InjectionMethod injectMethodStrToEnum(String methodStr)
         {
