@@ -1,32 +1,26 @@
 # YADI (Yet Another DLL Injector)
 
-YaDi is a Windows DLL injector that provides different techniques of injection. YADI is written in C# and leverages functions exported by the Windows API to interact with processes / achieve code injection and execution.
-
-## Install
-
-### From source
-
-### From binary
-
-## Injection Methods
-
-- LoadLibrary
-- SetWindowsHookEx
-- Thread Hijack (AKA Suspend, Inject, Resume (S.I.R.))
-- QueueUserAPC
-- IAT Hook
-
 ---
 
-## TODO
+YaDi is a Windows x86/x64 DLL injector. YADI leverages P/Invoke to make native windows calls exported by kernel32.dll, user32.dll, and psapi.dll to achieve code injection. I started this project to start picking up and using the C# language, and to become more familiar with various injection techiniques.
 
- - [ ] Add x86 support
- - [ ] Add unit tests
- - [ ] Implement SetWindowsHookEx DLL injection
- - [ ] Implement APC DLL injection
- - [ ] Implement IAT Hook DLL injection
- - [ ] Implement Reflective DLL injection
- - [ ] Create a command line utility for injecting
+## Usage
+
+To use YaDi, download the appropriate release and run it. Browse for a DLL file, select a process from the list view, and click inject.
+
+## Features
+
+
+- Various injection methods
+    - LoadLibrary
+    - SetWindowsHookEx
+    - Thread Hijack (AKA Suspend, Inject, Resume (S.I.R.))
+    - QueueUserAPC
+    - IAT Hook
+- x86 support
+- x64 support
+
+
 
 ## Contributing
 
