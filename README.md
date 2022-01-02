@@ -1,6 +1,6 @@
 # YADI (Yet Another DLL Injector)
 
-YADI is a Windows DLL injector that provides different techniques of injection. YADI is written in C# and leverages functions exported by the Windows API to interact with processes / achieve code injection and execution.
+YaDi is a Windows DLL injector that provides different techniques of injection. YADI is written in C# and leverages functions exported by the Windows API to interact with processes / achieve code injection and execution.
 
 ## Install
 
@@ -8,78 +8,13 @@ YADI is a Windows DLL injector that provides different techniques of injection. 
 
 ### From binary
 
-## Usage
-
-`@TODO`
-
 ## Injection Methods
 
-### LoadLibrary + CreateRemoteThread
-
----
-
-Loads a specified module into the address space of the calling process. The specified module may cause other modules to be loaded. The DLL is loaded into the process address space through a call to LoadLibrary. Then the DLL code is invoked by making a call to CreateRemoteThread.
-
-**PROS**
-
-- Easy implementation
-
-**CONS**
-
-- Easy detection
-
-### SetWindowsHookEx
----
-
-Installs an application-defined hook procedure into a hook chain which is then invoked whenever certain events are triggered.
-
-**PROS**
-
-**CONS**
-
-### Thread Hijack (AKA Suspend, Inject, Resume (S.I.R.))
-
----
-
-Thread Hijack DLL injection works by writing code into the target process' memory, suspending a thread in that target process, injecting code, setting the paused thread's instruction pointer to the address of that code, and then finally resuming the thread which results in the execution of the injected DLL code.
-
-**PROS**
-
-**CONS**
-
-### Reflective
-
----
-
-`@TODO`
-
-**PROS**
-
-**CONS**
-
-### QueueUserAPC
-
----
-
-QueueUserAPC (Queue User Asynchronous Procedure Call)
-
-`@TODO`
-
-**PROS**
-
-**CONS**
-
-### IAT Hooking
-
----
-
-IAT (Import Address Table) hooking
-
-`@TODO`
-
-**PROS**
-
-**CONS**
+- LoadLibrary
+- SetWindowsHookEx
+- Thread Hijack (AKA Suspend, Inject, Resume (S.I.R.))
+- QueueUserAPC
+- IAT Hook
 
 ---
 

@@ -21,6 +21,13 @@ namespace YADI
         {
             config = new Structs.Config();
 
+            //Helpers.PortableExecParser pep = new Helpers.PortableExecParser(pid);
+            //pep.Parse();
+            //Helpers.PortableExecParser pep2 = new Helpers.PortableExecParser("C:\\Users\\th3v0id\\source\\repos\\YADI\\Debug\\TestDLL_x86.dll");
+            //pep2.Parse();
+            //Helpers.PortableExecParser pep3 = new Helpers.PortableExecParser("C:\\Users\\th3v0id\\source\\repos\\YADI\\x64\\Debug\\TestDLL_x64.dll");
+            //pep2.Parse();
+
             InitializeComponent();
             InitializeDllPathInput();
             InitializeProcessListView();
@@ -259,13 +266,6 @@ namespace YADI
                 if (Int32.TryParse(item.Text, out int pid))
                 {
                     selectedProcessID = pid;
-
-                    //Helpers.PortableExecParser pep = new Helpers.PortableExecParser(pid);
-                    //pep.Parse();
-                    //Helpers.PortableExecParser pep2 = new Helpers.PortableExecParser("C:\\Users\\th3v0id\\source\\repos\\YADI\\Debug\\TestDLL_x86.dll");
-                    //pep2.Parse();
-                    //Helpers.PortableExecParser pep3 = new Helpers.PortableExecParser("C:\\Users\\th3v0id\\source\\repos\\YADI\\x64\\Debug\\TestDLL_x64.dll");
-                    //pep2.Parse();
 
                     InjectButton_TryEnable();
 
