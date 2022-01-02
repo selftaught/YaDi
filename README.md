@@ -2,7 +2,7 @@
 
 ---
 
-YaDi is a Windows x86/x64 DLL injector. YADI leverages P/Invoke to make native windows calls exported by kernel32.dll, user32.dll, and psapi.dll to achieve code injection. I started this project to start picking up and using the C# language, and to become more familiar with various injection techiniques.
+YaDi is a Windows x86/x64 DLL injector. YADI leverages P/Invoke to make native windows calls exported by kernel32.dll, user32.dll, and psapi.dll to achieve code injection. I started this project to learn some C# and to become more familiar with various injection techiniques.
 
 ## Usage
 
