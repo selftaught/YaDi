@@ -61,10 +61,6 @@ namespace YADI
 
                 ListViewItem lvi = new ListViewItem(proc.Id.ToString());
 
-                BinaryType bt;
-
-                Externals.Kernel32.GetBinaryType(sProcFilename, out bt);
-
                 String sArch = (Helpers.Process.Is64Bit(sProcFilename) ? "64" : "32");
 
                 lvi.SubItems.Add(sArch);

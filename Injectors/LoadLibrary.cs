@@ -69,32 +69,16 @@ namespace YADI.Injection
             }
 
             byte[] buffer = new byte[dllPathLen];
-            UIntPtr bytesRead;
 
-#if DEBUG
-            Console.WriteLine("Successfully wrote " + bytesWritten.ToUInt32() + " to process memory");
-
-            bool bReadMemory = Kernel32.ReadProcessMemory(procHandle, dllPathBaseAddr, buffer, buffer.Length, out bytesRead);
-
-            if (bReadMemory)
-            {
-                Console.WriteLine("Read " + bytesRead + " bytes from process memory: \n");
-                Console.WriteLine(" -> " + System.Text.Encoding.Default.GetString(buffer) + "\n");
-            }
-#endif
-
+            UIntPtr bytesRead = UIntPtr.Zero;
             IntPtr RemoteThread = Kernel32.CreateRemoteThread(procHandle, IntPtr.Zero, 0, LoadLibraryAddr, dllPathBaseAddr, 0, IntPtr.Zero);
 
 #if DEBUG
-            String LoadLibraryAddrHexStr = "0x" + LoadLibraryAddr.ToString("x8");
-            String RemoteThreadHexStr = "0x" + RemoteThread.ToString("x8");
-
-            Console.WriteLine("LoadLibrary address: " + LoadLibraryAddrHexStr);
-            Console.WriteLine("RemoteThread address: " + RemoteThreadHexStr);
+            Console.WriteLine("LoadLibrary address: " + LoadLibraryAddr.ToString("x8"));
+            Console.WriteLine("RemoteThread address: " + RemoteThread.ToString("x8"));
 #endif
 
-            if (RemoteThread == null ||
-                RemoteThread == IntPtr.Zero)
+            if (RemoteThread == null || RemoteThread == IntPtr.Zero)
             {
                 MessageBox.Show("Failed to create remote thread in process");
                 Kernel32.VirtualFreeEx(procHandle, dllPathBaseAddr, dllPathLen, Kernel32.MEM_RELEASE);
