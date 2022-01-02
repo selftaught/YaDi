@@ -1,4 +1,4 @@
-# YADI (Yet Another DLL Injector)
+# YaDi (Yet another DLL injector)
 
 ---
 
