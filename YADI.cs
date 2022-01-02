@@ -155,7 +155,7 @@ namespace YADI
         {
             if (selectedProcessID > 0 && DllPathText.Text.Length > 0)
             {
-                Injectors.Base injector = new Injectors.Base();
+                Injectors.Base injector = null;
 
                 switch(this.selectedInjectMeth)
                 {
@@ -166,7 +166,10 @@ namespace YADI
                     case InjectionMethod.QueueUserAPC:   { injector = new QueueUserAPC(selectedProcessID); break; }
                 }
 
-                injector.Inject(DllPathText.Text);
+                if (injector != null)
+                {
+                    injector.Inject(DllPathText.Text);
+                }
             }
         }
 
