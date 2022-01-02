@@ -19,14 +19,7 @@ namespace YADI.Injection
 
         public override bool Inject(String dllPath)
         {
-            IntPtr procHandle = Kernel32.OpenProcess(
-                Kernel32.PROCESS_CREATE_THREAD |
-                Kernel32.PROCESS_QUERY_INFORMATION |
-                Kernel32.PROCESS_VM_OPERATION |
-                Kernel32.PROCESS_VM_WRITE |
-                Kernel32.PROCESS_VM_READ,
-                false, (uint)this.pid);
-
+            IntPtr procHandle = Kernel32.OpenProcess(Externals.Kernel32.PROCESS_INJECT, false, (uint)this.pid);
 
             if (procHandle == null)
             {

@@ -9,33 +9,35 @@ namespace YADI.Injection
     public class LoadLibrary : Injectors.Base
     {
         private int pid;
-        public LoadLibrary(int pid)
+        public LoadLibrary(int _pid)
         {
-            this.pid = pid;
+            pid = _pid;
         }
 
         public override bool Inject(String dllPath)
         {
-            if (this.pid < 0)
+            if (pid < 0)
             {
                 MessageBox.Show("Invalid PID...");
                 return false;
             }
 
-            IntPtr procHandle = Kernel32.OpenProcess(
-                Kernel32.PROCESS_CREATE_THREAD |
-                Kernel32.PROCESS_QUERY_INFORMATION |
-                Kernel32.PROCESS_VM_OPERATION |
-                Kernel32.PROCESS_VM_WRITE |
-                Kernel32.PROCESS_VM_READ,
-                false, (uint)this.pid);
-
+            IntPtr procHandle = Kernel32.OpenProcess(Externals.Kernel32.PROCESS_INJECT, false, (uint)pid);
             IntPtr LoadLibraryAddr = Kernel32.GetProcAddress(Kernel32.GetModuleHandle("kernel32.dll"), "LoadLibraryA");
 
             if (procHandle == null)
             {
                 MessageBox.Show("Couldn't get process handle...");
                 return false;
+            }
+
+            if (Environment.Is64BitOperatingSystem)
+            {
+                if (Helpers.Process.Is32Bit(pid) && Helpers.DLL.Is64Bit(dllPath))
+                {
+                    MessageBox.Show("Can't inject a 64 bit DLL into a 32 bit process!");
+                    return false;
+                }
             }
 
 #if DEBUG
@@ -120,11 +122,6 @@ namespace YADI.Injection
             Kernel32.CloseHandle(procHandle);
 
             return true;
-        }
-
-        public void Dispose()
-        {
-            throw new NotImplementedException();
         }
     }
 }

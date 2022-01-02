@@ -107,6 +107,7 @@
     <Compile Include="Externals\Kernel32.cs" />
     <Compile Include="Externals\PSAPI.cs" />
     <Compile Include="Externals\User32.cs" />
+    <Compile Include="Helpers\DLL.cs" />
     <Compile Include="Helpers\HexDump.cs" />
     <Compile Include="Helpers\Misc.cs" />
     <Compile Include="Helpers\PortableExecParser.cs" />

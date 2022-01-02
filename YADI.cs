@@ -65,7 +65,7 @@ namespace YADI
 
                 Externals.Kernel32.GetBinaryType(sProcFilename, out bt);
 
-                String sArch = (bt == BinaryType.SCS_32BIT_BINARY ? "32" : (bt == BinaryType.SCS_64BIT_BINARY ? "64" : ""));
+                String sArch = (Helpers.Process.Is64Bit(sProcFilename) ? "64" : "32");
 
                 lvi.SubItems.Add(sArch);
                 lvi.SubItems.Add(proc.ProcessName);
@@ -264,21 +264,18 @@ namespace YADI
                 {
                     selectedProcessID = pid;
 
-                    Helpers.PortableExecParser pep = new Helpers.PortableExecParser(pid);
-                    pep.Parse();
-
-                    Helpers.PortableExecParser pep2 = new Helpers.PortableExecParser("C:\\Users\\th3v0id\\source\\repos\\YADI\\Debug\\TestDLL_x86.dll");
-                    pep2.Parse();
+                    //Helpers.PortableExecParser pep = new Helpers.PortableExecParser(pid);
+                    //pep.Parse();
+                    //Helpers.PortableExecParser pep2 = new Helpers.PortableExecParser("C:\\Users\\th3v0id\\source\\repos\\YADI\\Debug\\TestDLL_x86.dll");
+                    //pep2.Parse();
+                    //Helpers.PortableExecParser pep3 = new Helpers.PortableExecParser("C:\\Users\\th3v0id\\source\\repos\\YADI\\x64\\Debug\\TestDLL_x64.dll");
+                    //pep2.Parse();
 
                     InjectButton_TryEnable();
+
                     return;
                 }
             }
-        }
-
-        private void x64RadioButton_CheckedChanged(object sender, EventArgs e)
-        {
-
         }
     }
 }

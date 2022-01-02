@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Text;
 
 using static YADI.Externals.PSAPI;
@@ -23,28 +24,61 @@ namespace YADI.Helpers
             return sb.ToString();
         }
 
-        public static bool IsWow64Process(System.Diagnostics.Process process)
+        public static Enums.BinaryType GetBinaryType(int pid)
         {
-            bool bIsWow64Process = true;
+            String path = GetFilename(System.Diagnostics.Process.GetProcessById(pid));
+            Enums.BinaryType binaryType;
+            Externals.Kernel32.GetBinaryType(path, out binaryType);
+            return binaryType;
+        }
 
-            if (!Environment.Is64BitOperatingSystem)
+        public static Enums.BinaryType GetBinaryType(String path)
+        {
+            Enums.BinaryType binaryType;
+            Externals.Kernel32.GetBinaryType(path, out binaryType);
+            return binaryType;
+        }
+
+        public static bool Is64Bit(String path)
+        {
+            bool bIs64Bit = false;
+
+            if (Environment.Is64BitOperatingSystem)
             {
-                return false;
+                if (GetBinaryType(path) == Enums.BinaryType.SCS_64BIT_BINARY)
+                {
+                    bIs64Bit = true;
+                }
             }
 
-            IntPtr hProc = Externals.Kernel32.OpenProcess(Externals.Kernel32.PROCESS_QUERY_INFORMATION, false, (uint)process.Id);
+            return bIs64Bit;
+        }
 
-            bool bIsWow64ProcessRet = Externals.Kernel32.IsWow64Process(hProc, out bIsWow64Process);
+        public static bool Is64Bit(int pid)
+        {
+            System.Diagnostics.Process proc = System.Diagnostics.Process.GetProcessById(pid);
+            return Is64Bit(GetFilename(proc));
+        }
 
-            if (!bIsWow64ProcessRet)
+        public static bool Is32Bit(String path)
+        {
+            bool bIs32Bit = false;
+
+            if (Environment.Is64BitOperatingSystem)
             {
-                Externals.Kernel32.CloseHandle(hProc);
-                throw new Win32Exception();
+                if (GetBinaryType(path) == Enums.BinaryType.SCS_32BIT_BINARY)
+                {
+                    bIs32Bit = true;
+                }
             }
 
-            Externals.Kernel32.CloseHandle(hProc);
+            return bIs32Bit;
+        }
 
-            return bIsWow64Process;
+        public static bool Is32Bit(int pid)
+        {
+            System.Diagnostics.Process proc = System.Diagnostics.Process.GetProcessById(pid);
+            return Is32Bit(GetFilename(proc));
         }
 
         public static List<Structs.Module> GetProcessModules(int PID)

@@ -99,18 +99,9 @@ namespace YADI.Helpers
 
         private void ParseFromProcessMemory()
         {
-            Console.WriteLine("Parsing PE from process memory");
-
             if (Pid > 0)
             {
-                IntPtr hProc = Externals.Kernel32.OpenProcess(
-                    Externals.Kernel32.PROCESS_CREATE_THREAD |
-                    Externals.Kernel32.PROCESS_QUERY_INFORMATION |
-                    Externals.Kernel32.PROCESS_VM_OPERATION |
-                    Externals.Kernel32.PROCESS_VM_WRITE |
-                    Externals.Kernel32.PROCESS_VM_READ,
-                    false, (uint)Pid
-                );
+                IntPtr hProc = Externals.Kernel32.OpenProcess(Externals.Kernel32.PROCESS_INJECT, false, (uint)Pid);
 
                 if (hProc == IntPtr.Zero)
                 {
@@ -140,12 +131,7 @@ namespace YADI.Helpers
                     }
                 }
 
-                if (module == null)
-                {
-                    MessageBox.Show("Couldn't find process' MainModule!", "ERROR");
-                    return;
-                }
-                else if (File.Exists(module.Path))
+                if (module != null && File.Exists(module.Path))
                 {
                     Structs.IMAGE_DOS_HEADER sImageDosHeader = GetImageDosHeader(module.Path);
                     Structs.IMAGE_NT_HEADERS32 sImageNtHeaders32;
@@ -155,19 +141,20 @@ namespace YADI.Helpers
                     // the target PE is 32 bit
                     if (!Environment.Is64BitOperatingSystem)
                     {
-                        Console.WriteLine("Getting x86 NT Headers from PE");
                         sImageNtHeaders32 = GetImageNtHeaders32();
                     }
                     else
                     {
                         // OS is 64 bit so we can't be sure if the target PE
                         // is 32 bit or 64 bit without a call is IsWow64Process..
-                        if (Helpers.Process.IsWow64Process(p))
+                        if (Helpers.Process.Is64Bit(Helpers.Process.GetFilename(p)))
                         {
-
+                            sImageNtHeaders64 = GetImageNtHeaders64();
                         }
                     }
                 }
+
+                Externals.Kernel32.CloseHandle(hProc);
             }
         }
     }
