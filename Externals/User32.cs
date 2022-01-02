@@ -31,14 +31,14 @@ namespace YADI.Externals
          * SendMessage(IntPtr hWnd, uint Msg, int wParam, int lParam);
          * https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-sendmessage
          */
-        [DllImport("user32.dll")]
+        [DllImport("user32.dll", SetLastError = true)]
         public static extern int SendMessage(IntPtr hWnd, uint Msg, int wParam, int lParam);
 
         /**
          * SendMessage(IntPtr hWnd, uint Msg, int wParam, ref Structs.LvItem item_info);
          * https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-sendmessage
          */
-        [DllImport("user32.dll")]
+        [DllImport("user32.dll", SetLastError = true)]
         public static extern int SendMessage(IntPtr hWnd, uint Msg, int wParam, ref Structs.LvItem item_info);
     }
 }

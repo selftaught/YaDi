@@ -21,21 +21,21 @@ namespace YADI.Externals
         * GetModuleFileNameEx
         * https://docs.microsoft.com/en-us/windows/win32/api/psapi/nf-psapi-getmodulefilenameexa
         */
-        [DllImport("psapi.dll")]
+        [DllImport("psapi.dll", SetLastError = true)]
         public static extern uint GetModuleFileNameEx(IntPtr hProcess, IntPtr hModule, [Out] StringBuilder lpBaseName, uint nSize);
 
         /**
          * GetModuleInformation
          * https://docs.microsoft.com/en-us/windows/win32/api/psapi/nf-psapi-getmoduleinformation
          */
-        [DllImport("psapi.dll")]
+        [DllImport("psapi.dll", SetLastError = true)]
         public static extern bool GetModuleInformation(IntPtr hProcess, IntPtr hModule, out Structs.ModuleInformation lpModInfo, uint cb);
 
         /**
          * EnumProcessModulesEx
          * https://docs.microsoft.com/en-us/windows/win32/api/psapi/nf-psapi-enumprocessmodulesex
          */
-        [DllImport("psapi.dll")]
+        [DllImport("psapi.dll", SetLastError = true)]
         public static extern bool EnumProcessModulesEx(IntPtr hProcess, IntPtr[] lphModule, int cb, out int lpcbNeeded, uint dwFilterFlag);
 
     }
