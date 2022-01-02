@@ -25,11 +25,11 @@ To use YaDi, download the appropriate release and run it. Browse for a DLL file,
 ## Contributing
 
 1. Fork it
-2. Create feature branch (`git checkout -b feature/feature-desc`)
+2. Create a feature / bugfix branch
 3. Make some changes...
-4. Commit changes (`git commit -m '...'`)
-5. Push changes to remote feature branch (`git push origin feature/feature-desc`)
-6. Create a pull request when the feature branch is ready for review
+4. Commit changes
+5. Push changes to remote feature branch
+6. Create a pull request
 
 ## License
 
