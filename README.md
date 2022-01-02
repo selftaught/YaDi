@@ -22,6 +22,14 @@ To use YaDi, download the appropriate release and run it. Browse for a DLL file,
 - x86 support
 - x64 support
 
+## TODO
+
+ - [ ] Improve error handling
+ - [ ] Logging to filesystem
+ - [ ] Toolbar submenu forms
+ - [ ] SetWindowsHookEx injection
+ - [ ] QueueUserAPC injection
+ - [ ] IAT hook injection
 
 
 ## Contributing

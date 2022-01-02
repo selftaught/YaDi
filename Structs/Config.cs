@@ -4,6 +4,8 @@ using System;
 using System.IO;
 using System.Text;
 
+using YADI.Enums;
+
 namespace YADI.Structs
 {
     internal class Config
@@ -18,11 +20,10 @@ namespace YADI.Structs
 
         public Config()
         {
-            // defaults
             rememberLastDllPath = true;
             rememberLastMethod = true;
             lastDllPath = "";
-            lastInjectionMeth = (ushort)Enums.InjectionMethod.LoadLibrary;
+            lastInjectionMeth = (ushort)InjectionMethod.LoadLibrary;
             configPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\YADI.Config.json";
 
             Load();
@@ -36,77 +37,64 @@ namespace YADI.Structs
                 Save();
             }
 
-            using (var sr = new StreamReader(configPath))
+            using (var streadReader = new StreamReader(configPath))
             {
-                String configJsonText = sr.ReadToEnd();
-#if DEBUG
-                Console.WriteLine("Read text from config.json: " + configJsonText);
-#endif
+                String configJsonText = streadReader.ReadToEnd();
                 try
                 {
                     JObject o = JObject.Parse(configJsonText);
 
-                    rememberLastDllPath = (bool)o.SelectToken(".RememberLastDllPath");
-                    rememberLastMethod = (bool)o.SelectToken(".RememberLastInjectionMethod");
-
                     lastDllPath = (String)o.SelectToken(".LastDllPath");
                     lastInjectionMeth = (ushort)o.SelectToken(".LastInjectionMethod");
+                    
+                    rememberLastDllPath = (bool)o.SelectToken(".RememberLastDllPath");
+                    rememberLastMethod = (bool)o.SelectToken(".RememberLastInjectionMethod");
                 }
                 catch (Newtonsoft.Json.JsonReaderException e)
                 {
-#if DEBUG
-                    Console.WriteLine("Caught (Netwonsoft.Json.JsonReaderException): " + e.Message);
-#endif
                     return false;
                 }
             }
 
-#if DEBUG
-            Console.WriteLine("config.rememberLastDllPath: " + rememberLastDllPath);
-            Console.WriteLine("config.lastDllPath: " + lastDllPath);
-#endif
             return true;
         }
 
         public bool Save()
         {
-            StringBuilder sb = new StringBuilder();
-            StringWriter sw = new StringWriter(sb);
+            StringBuilder stringBuilder = new StringBuilder();
+            StringWriter stringWriter = new StringWriter(stringBuilder);
 
-            using (JsonWriter writer = new JsonTextWriter(sw))
+            using (JsonWriter writer = new JsonTextWriter(stringWriter))
             {
                 writer.Formatting = Formatting.Indented;
 
                 writer.WriteStartObject();
+
                 writer.WritePropertyName("RememberLastDllPath");
                 writer.WriteValue(rememberLastDllPath);
+                
                 writer.WritePropertyName("LastDllPath");
                 writer.WriteValue(lastDllPath);
+                
                 writer.WritePropertyName("RememberLastInjectionMethod");
                 writer.WriteValue(rememberLastMethod);
+                
                 writer.WritePropertyName("LastInjectionMethod");
                 writer.WriteValue(lastInjectionMeth);
+                
                 writer.WriteEndObject();
             }
 
-#if DEBUG
-            Console.WriteLine("Writing to " + configPath);
-            Console.WriteLine(sb.ToString());
-#endif
-
-            using (StreamWriter file =  new StreamWriter(configPath))
+            using (StreamWriter file = new StreamWriter(configPath))
             {
-                file.Write(sb.ToString());
+                file.Write(stringBuilder.ToString());
             }
 
-            File.WriteAllText(configPath, sb.ToString());
+            File.WriteAllText(configPath, stringBuilder.ToString());
 
             return true;
         }
 
-        /**
-         * Getters
-         */
         public bool RememberLastDllPath()
         {
             return rememberLastDllPath;
@@ -127,9 +115,6 @@ namespace YADI.Structs
             return lastInjectionMeth;
         }
 
-        /**
-         * Setters
-         */
         public void SetRememberLastDllPath(bool b)
         {
             rememberLastDllPath = b;
