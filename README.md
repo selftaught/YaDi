@@ -26,7 +26,7 @@ To use YaDi, download the appropriate release and run it. Browse for a DLL file,
 
 1. Fork it
 2. Create a feature / bugfix branch
-3. Make some changes...
+3. Make some changes
 4. Commit changes
 5. Push changes to remote feature branch
 6. Create a pull request
