@@ -176,7 +176,6 @@ namespace YADI
         private void SearchTextBox_TextChanged(object sender, EventArgs e)
         {
             PopulateProcessListView(SearchTextBox.Text);
-            InjectButton_TryEnable();
         }
 
         private void DllPathText_TextChanged(object sender, EventArgs e)
@@ -187,20 +186,6 @@ namespace YADI
             }
 
             selectedDllPath = DllPathText.Text;
-
-            InjectButton_TryEnable();
-        }
-
-        private void InjectButton_TryEnable()
-        {
-            if (File.Exists(selectedDllPath) && selectedProcessID > 0)
-            {
-                InjectButton.Enabled = true;
-            }
-            else
-            {
-                InjectButton.Enabled = false;
-            }
         }
 
         private void injectionMethComboBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -269,9 +254,6 @@ namespace YADI
                 if (Int32.TryParse(item.Text, out int pid))
                 {
                     selectedProcessID = pid;
-
-                    InjectButton_TryEnable();
-
                     return;
                 }
             }

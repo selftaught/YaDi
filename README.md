@@ -30,6 +30,8 @@ To use YaDi, download the appropriate release and run it. Browse for a DLL file,
  - [ ] SetWindowsHookEx injection
  - [ ] QueueUserAPC injection
  - [ ] IAT hook injection
+ - [ ] CI/CD
+ - [ ] Missing unit tests
 
 
 ## Contributing

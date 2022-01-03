@@ -56,7 +56,6 @@ namespace YADI
             // 
             // InjectButton
             // 
-            this.InjectButton.Enabled = false;
             this.InjectButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.InjectButton.Location = new System.Drawing.Point(434, 62);
             this.InjectButton.Margin = new System.Windows.Forms.Padding(4);
