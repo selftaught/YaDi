@@ -4,14 +4,18 @@ using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
 
+using log4net;
+
 using YADI.Injection;
 using YADI.Enums;
-
+using System.Reflection;
 
 namespace YADI
 {
     public partial class YADI : Form
     {
+
+        private static readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         private String selectedDllPath = String.Empty;
         private int selectedProcessID = 0;
         private InjectionMethod selectedInjectMeth = InjectionMethod.LoadLibrary;
@@ -20,13 +24,6 @@ namespace YADI
         public YADI()
         {
             config = new Structs.Config();
-
-            //Helpers.PortableExecParser pep = new Helpers.PortableExecParser(pid);
-            //pep.Parse();
-            //Helpers.PortableExecParser pep2 = new Helpers.PortableExecParser("C:\\Users\\th3v0id\\source\\repos\\YADI\\Debug\\TestDLL_x86.dll");
-            //pep2.Parse();
-            //Helpers.PortableExecParser pep3 = new Helpers.PortableExecParser("C:\\Users\\th3v0id\\source\\repos\\YADI\\x64\\Debug\\TestDLL_x64.dll");
-            //pep2.Parse();
 
             InitializeComponent();
             InitializeDllPathInput();

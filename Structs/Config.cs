@@ -1,8 +1,10 @@
-﻿using Newtonsoft.Json;
+﻿using log4net;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.IO;
 using System.Text;
+using System.Reflection;
 
 using YADI.Enums;
 
@@ -10,6 +12,8 @@ namespace YADI.Structs
 {
     internal class Config
     {
+        private static readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+
         private bool rememberLastDllPath;
         private bool rememberLastMethod;
 
@@ -24,7 +28,7 @@ namespace YADI.Structs
             rememberLastMethod = true;
             lastDllPath = "";
             lastInjectionMeth = (ushort)InjectionMethod.LoadLibrary;
-            configPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\YADI.Config.json";
+            configPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\yadi.json";
 
             Load();
         }
@@ -45,13 +49,13 @@ namespace YADI.Structs
                     JObject o = JObject.Parse(configJsonText);
 
                     lastDllPath = (String)o.SelectToken(".LastDllPath");
-                    lastInjectionMeth = (ushort)o.SelectToken(".LastInjectionMethod");
-                    
+                    lastInjectionMeth = (ushort)o.SelectToken(".LastInjectionMethod");    
                     rememberLastDllPath = (bool)o.SelectToken(".RememberLastDllPath");
                     rememberLastMethod = (bool)o.SelectToken(".RememberLastInjectionMethod");
                 }
                 catch (Newtonsoft.Json.JsonReaderException e)
                 {
+                    log.Error(e.Message);
                     return false;
                 }
             }
