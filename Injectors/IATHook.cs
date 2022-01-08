@@ -24,6 +24,15 @@ namespace YADI.Injection
              * 5. Replace function found in step #2
              *    with the hook/intercept function address.
              */
+
+            System.Diagnostics.Process proc = System.Diagnostics.Process.GetProcessById((int)pid);
+
+            IntPtr pBaseAddr = Helpers.Process.GetBaseAddr(proc);
+            String sProcFile = Helpers.Process.GetFilename((int)pid);
+
+            PeNet.PeFile pe = new PeNet.PeFile(sProcFile);
+
+
             return true;
         }
     }

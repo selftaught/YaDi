@@ -6,7 +6,7 @@ namespace YADI.Injectors
     {
         public virtual bool Inject(String szDllPath)
         {
-            throw new Exception("Inject Method Unimplemented");
+            throw new Exception("Inject Me`thod Unimplemented");
         }
     }
 }

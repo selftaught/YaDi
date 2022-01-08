@@ -10,9 +10,49 @@ namespace YADI.Helpers
 {
     class Process
     {
+        public static IntPtr GetBaseAddr(int pid)
+        {
+            System.Diagnostics.Process p = System.Diagnostics.Process.GetProcessById(pid);
+            return GetBaseAddr(p);
+        }
+
+        public static IntPtr GetBaseAddr(System.Diagnostics.Process proc)
+        {
+            String procFilename = GetFilename(proc);
+
+            try
+            {
+                foreach (System.Diagnostics.ProcessModule module in proc.Modules)
+                {
+                    if (module.FileName == procFilename)
+                    {
+                        return module.BaseAddress;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            
+
+            return IntPtr.Zero;
+        }
+        /**
+         * GetFilename is neccessary because trying to access process.MainModule.Filename
+         * will often result in an access denied error. Getting a handle to the process
+         * via OpenProcess and then calling QueryFullProcessImageName with it, does the
+         * trick.
+         */
+        public static string GetFilename(int pid)
+        {
+            System.Diagnostics.Process proc = System.Diagnostics.Process.GetProcessById(pid);
+            return GetFilename(proc);
+        }
+        
         public static String GetFilename(System.Diagnostics.Process process)
         {
-            int capacity = 256;
+            int capacity = 512;
             StringBuilder sb = new StringBuilder(capacity);
             IntPtr hProcess = Externals.Kernel32.OpenProcess((uint)Enums.ProcessAccess.QueryLimitedInformation, false, (uint)process.Id);
 
