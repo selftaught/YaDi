@@ -32,6 +32,29 @@ namespace YADI.Injection
 
             PeNet.PeFile pe = new PeNet.PeFile(sProcFile);
 
+            Console.WriteLine(pBaseAddr);
+            Console.WriteLine(sProcFile);
+
+            PeNet.Header.Pe.ImportFunction[] impFuncs = pe.ImportedFunctions;
+
+            foreach (PeNet.Header.Pe.ImportFunction impFunc in impFuncs)
+            {
+                Console.WriteLine(impFunc.Name + " (" + impFunc.IATOffset.ToString() + ")");
+            }
+
+            foreach (PeNet.Header.Pe.ImageImportDescriptor iid in pe.ImageImportDescriptors)
+            {
+                Console.WriteLine(iid.Name);
+            }
+
+
+            foreach (PeNet.Header.Pe.ImageSectionHeader ish in pe.ImageSectionHeaders)
+            {
+                Console.WriteLine(ish.Name + ", VA: " + ish.VirtualAddress.ToString() + ", VSIZE: " + ish.VirtualSize + ", RAW SIZE: " + ish.SizeOfRawData + ", IMG BASE: " + ish.ImageBaseAddress.ToString() + ", PROC BA: " + pBaseAddr.ToString());
+
+                Console.WriteLine(ish.PointerToRawData.ToString());
+                Console.WriteLine(ish.PointerToRawData);
+            }
 
             return true;
         }

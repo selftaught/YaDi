@@ -1,5 +1,6 @@
 ﻿using System;
 
+using YADI.Externals;
 
 namespace YADI.Injection
 {
@@ -14,7 +15,8 @@ namespace YADI.Injection
 
         public override bool Inject(String dllPath)
         {
-
+            IntPtr procHandle = Kernel32.OpenProcess(Kernel32.PROCESS_INJECT, false, (uint)pid);
+            IntPtr LoadLibraryAddr = Kernel32.GetProcAddress(Kernel32.GetModuleHandle("kernel32.dll"), "LoadLibraryA");
             return true;
         }
     }

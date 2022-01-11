@@ -97,53 +97,29 @@ namespace YADI.Injection
                 // If we don't get a handle back on the thread
                 if (threadHandle == null || threadHandle == IntPtr.Zero)
                 {
-#if DEBUG
-                    Console.WriteLine("Couldn't open handle to thread (ID: " + threadId + ")");
-#endif
-                    // Try the next thread
                     continue;
                 }
 
-#if DEBUG
                 Console.WriteLine("Got thread handle: " + threadHandle + "\nAttempting to suspend thread");
-#endif
 
                 // Suspend the thread so we can QueueUserAPC
-                int pSuspendedThreadStatus = Kernel32.SuspendThread(threadHandle);
-
-                if (pSuspendedThreadStatus == -1)
+                if (Kernel32.SuspendThread(threadHandle) == -1)
                 {
-#if DEBUG
                     Console.Write("SuspendThread failed (thread id: " + threadId + ")...");
-#endif
-                    // Close the handle on the current thread
                     Kernel32.CloseHandle(threadHandle);
-
-                    // Try the next thread
                     continue;
                 }
 
-                // QueueUserAPC
                 if (Kernel32.QueueUserAPC(writeAddr, threadHandle, IntPtr.Zero) != 0)
                 {
-#if DEBUG
-                    Console.WriteLine("QueueUserAPC was unsuccessful");
-#endif
-                    // ResumeThread
                     Kernel32.ResumeThread(threadHandle);
-
-                    // Close thread handle
                     Kernel32.CloseHandle(threadHandle);
-
                     continue;
                 }
 
                 queued = true;
 
-                // ResumeThread
                 Kernel32.ResumeThread(threadHandle);
-
-                // Close thread handle
                 Kernel32.CloseHandle(threadHandle);
             }
 
