@@ -2,20 +2,17 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Reflection;
 using System.Windows.Forms;
-
-using log4net;
 
 using YaDi.Injection;
 using YaDi.Enums;
-using System.Reflection;
 
 namespace YaDi
 {
     public partial class YaDi : Form
     {
 
-        private static readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         private String selectedDllPath = String.Empty;
         private int selectedProcessID = 0;
         private InjectionMethod selectedInjectMeth = InjectionMethod.LoadLibrary;
