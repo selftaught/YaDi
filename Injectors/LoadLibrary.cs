@@ -2,9 +2,9 @@
 using System.Text;
 using System.Windows.Forms;
 
-using YADI.Externals;
+using YaDi.Externals;
 
-namespace YADI.Injection
+namespace YaDi.Injection
 {
     public class LoadLibrary : Injectors.Base
     {

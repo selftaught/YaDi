@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace YADI.Enums
+namespace YaDi.Enums
 {
     [Flags]
     public enum DataSectionFlags : uint

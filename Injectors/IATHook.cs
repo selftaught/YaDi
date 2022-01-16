@@ -2,7 +2,7 @@
 
 // reference: https://www.ired.team/offensive-security/code-injection-process-injection/import-adress-table-iat-hooking
 
-namespace YADI.Injection
+namespace YaDi.Injection
 {
     class IATHook : Injectors.Base
     {

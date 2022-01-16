@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-namespace YADI.Externals
+namespace YaDi.Externals
 {
     public class User32
     {

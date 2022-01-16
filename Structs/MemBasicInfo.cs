@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace YADI.Structs
+namespace YaDi.Structs
 {
     public struct MemBasicInfo
     {

@@ -3,9 +3,9 @@ using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
 
-using YADI.Externals;
+using YaDi.Externals;
 
-namespace YADI.Injection
+namespace YaDi.Injection
 {
     class ThreadHijack : Injectors.Base
     {

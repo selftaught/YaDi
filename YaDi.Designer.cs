@@ -1,7 +1,7 @@
 ﻿
-namespace YADI
+namespace YaDi
 {
-    partial class YADI
+    partial class YaDi
     {
         /// <summary>
         /// Required designer variable.
@@ -30,7 +30,7 @@ namespace YADI
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(YADI));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(YaDi));
             this.InjectButton = new System.Windows.Forms.Button();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.Browse = new System.Windows.Forms.Button();
@@ -202,7 +202,7 @@ namespace YADI
             this.label3.TabIndex = 21;
             this.label3.Text = "Method";
             // 
-            // YADI
+            // YaDi
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -223,7 +223,7 @@ namespace YADI
             this.MainMenuStrip = this.menuStrip1;
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.MaximizeBox = false;
-            this.Name = "YADI";
+            this.Name = "YaDi";
             this.Text = "YaDi";
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();

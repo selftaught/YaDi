@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace YADI
+namespace YaDi
 {
     static class Program
     {
@@ -13,7 +13,7 @@ namespace YADI
         {
             Application.EnableVisualStyles();
                         Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new YADI());
+            Application.Run(new YaDi());
         }
     }
 }

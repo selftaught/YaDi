@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace YADI.Injectors
+namespace YaDi.Injectors
 {
     public class Base
     {

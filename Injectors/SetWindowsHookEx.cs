@@ -1,8 +1,8 @@
 ﻿using System;
 
-using YADI.Externals;
+using YaDi.Externals;
 
-namespace YADI.Injection
+namespace YaDi.Injection
 {
     class SetWindowsHookEx : Injectors.Base
     {

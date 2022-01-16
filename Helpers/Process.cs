@@ -4,9 +4,9 @@ using System.ComponentModel;
 using System.IO;
 using System.Text;
 
-using static YADI.Externals.PSAPI;
+using static YaDi.Externals.PSAPI;
 
-namespace YADI.Helpers
+namespace YaDi.Helpers
 {
     class Process
     {

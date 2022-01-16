@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace YADI.Helpers
+namespace YaDi.Helpers
 {
     public class DLL
     {

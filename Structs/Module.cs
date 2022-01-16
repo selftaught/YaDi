@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace YADI.Structs
+namespace YaDi.Structs
 {
     class Module
     {

@@ -1,10 +1,10 @@
 ﻿using System;
 
 /**
- * YADI.Structs.LvItem
+ * YaDi.Structs.LvItem
  * http://csharphelper.com/blog/2018/03/display-icons-next-to-listview-sub-items-in-c/
  */
-namespace YADI.Structs
+namespace YaDi.Structs
 {
     public struct LvItem
     {

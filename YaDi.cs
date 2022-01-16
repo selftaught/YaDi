@@ -6,13 +6,13 @@ using System.Windows.Forms;
 
 using log4net;
 
-using YADI.Injection;
-using YADI.Enums;
+using YaDi.Injection;
+using YaDi.Enums;
 using System.Reflection;
 
-namespace YADI
+namespace YaDi
 {
-    public partial class YADI : Form
+    public partial class YaDi : Form
     {
 
         private static readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
@@ -21,7 +21,7 @@ namespace YADI
         private InjectionMethod selectedInjectMeth = InjectionMethod.LoadLibrary;
         private Structs.Config config;
 
-        public YADI()
+        public YaDi()
         {
             config = new Structs.Config();
 

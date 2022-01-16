@@ -1,6 +1,6 @@
 ﻿using System.Runtime.InteropServices;
 
-namespace YADI.Structs
+namespace YaDi.Structs
 {
     [StructLayout(LayoutKind.Sequential, Pack = 16)]
     public struct XSaveFormat64

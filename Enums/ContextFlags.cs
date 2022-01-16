@@ -1,4 +1,4 @@
-﻿namespace YADI.Enums
+﻿namespace YaDi.Enums
 {
     public enum ContextFlags : uint
     {

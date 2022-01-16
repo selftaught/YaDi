@@ -6,9 +6,9 @@ using System.IO;
 using System.Text;
 using System.Reflection;
 
-using YADI.Enums;
+using YaDi.Enums;
 
-namespace YADI.Structs
+namespace YaDi.Structs
 {
     internal class Config
     {

@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{4E28D6F1-4B6D-4B08-ACBD-C03BD4F72928}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>YADI</RootNamespace>
-    <AssemblyName>YADI</AssemblyName>
+    <RootNamespace>YaDi</RootNamespace>
+    <AssemblyName>YaDi</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -155,16 +155,16 @@
     <Compile Include="Structs\Module.cs" />
     <Compile Include="Structs\ModuleInformation.cs" />
     <Compile Include="Structs\XSaveFormat64.cs" />
-    <Compile Include="YADI.cs">
+    <Compile Include="YaDi.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="YADI.Designer.cs">
-      <DependentUpon>YADI.cs</DependentUpon>
+    <Compile Include="YaDi.Designer.cs">
+      <DependentUpon>YaDi.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="YADI.resx">
-      <DependentUpon>YADI.cs</DependentUpon>
+    <EmbeddedResource Include="YaDi.resx">
+      <DependentUpon>YaDi.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

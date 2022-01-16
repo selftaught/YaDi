@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-namespace YADI.Structs
+namespace YaDi.Structs
 {
     [StructLayout(LayoutKind.Explicit)]
     public struct IMAGE_NT_HEADERS64

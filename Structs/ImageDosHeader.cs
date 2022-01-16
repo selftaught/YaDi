@@ -3,7 +3,7 @@ using System.Runtime.InteropServices;
 
 // http://pinvoke.net/default.aspx/Structures.IMAGE_DOS_HEADER
 
-namespace YADI.Structs
+namespace YaDi.Structs
 {
     [StructLayout(LayoutKind.Sequential)]
     public struct IMAGE_DOS_HEADER
