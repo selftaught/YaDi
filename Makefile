@@ -1,5 +1,5 @@
-mkfile_path := $(abspath $(lastword $(MAKEFILE_LIST)))
-current_dir := $(notdir $(patsubst %/,%,$(dir $(mkfile_path))))
+PROJECT=YaDi
+CSPROJECT=$(PROJECT).csproj
 
 remove-packages:
 	rm -rf packages
@@ -7,5 +7,8 @@ remove-packages:
 install-packages: remove-packages
 	nuget install -OutputDirectory ./packages
 
-msbuild: install-packages
-	msbuild YaDi.csproj
+build-debug: install-packages
+	msbuild -p:Configuration=Debug $(CSPROJECT)
+
+build-release: install-packages
+	msbuild -p:Configuration=Release $(CSPROJECT)
