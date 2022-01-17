@@ -12,13 +12,7 @@ To use YaDi, download the appropriate release and run it. Browse for a DLL file,
 
 ## Features
 
-
-- Various injection methods
-    - LoadLibrary
-    - SetWindowsHookEx
-    - Thread Hijack (AKA Suspend, Inject, Resume (S.I.R.))
-    - QueueUserAPC
-    - IAT Hook
+- LoadLibrary/CreateRemoteThread injection
 - x86 support
 - x64 support
 
