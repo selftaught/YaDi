@@ -165,12 +165,7 @@ namespace YaDi
             // 
             this.injectionMethComboBox.FormattingEnabled = true;
             this.injectionMethComboBox.Items.AddRange(new object[] {
-            "QueueUserAPC",
-            "IAT Hook",
-            "LoadLibrary",
-            "Reflective",
-            "SetWindowsHookEx",
-            "Thread Hijack / SIR (Suspend, Inject, Resume)"});
+            "LoadLibrary"});
             this.injectionMethComboBox.Location = new System.Drawing.Point(35, 111);
             this.injectionMethComboBox.Margin = new System.Windows.Forms.Padding(4);
             this.injectionMethComboBox.Name = "injectionMethComboBox";

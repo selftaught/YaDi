@@ -6,6 +6,7 @@ using System.Text;
 using System.Reflection;
 
 using YaDi.Enums;
+using System.Windows.Forms;
 
 namespace YaDi.Structs
 {
@@ -52,7 +53,7 @@ namespace YaDi.Structs
                 }
                 catch (Newtonsoft.Json.JsonReaderException e)
                 {
-                    return false;
+                    MessageBox.Show(e.Message);
                 }
             }
 
